@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Set</title>
+</head>
+<body>
+    <script>
+        //声明一个set
+        let s = new Set();
+        console.log(s, typeof s);//Set(0) 'object'
+        let s2 = new Set(['大事','小事','好事','好事']);
+        console.log(s2);//Set(3) {'大事', '小事', '好事'}
+
+        // //元素个数
+        // console.log(s2.size);//3
+        // //添加新的元素
+        // s2.add('喜事');
+        // //删除元素
+        // s2.delete('小事');
+        // //检测是否含有元素,有就是true，没有就是false
+        // console.log(s2.has('好事')); //true
+        // //清空
+        // s2.clear();
+        // console.log(s2);
+
+        for(let v of s2){
+            console.log(v);
+        }
+    </script>
+</body>
+</html>

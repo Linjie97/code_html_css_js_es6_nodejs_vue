@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>创建二维数组</title>
+</head>
+
+<body>
+    <script>
+        const m = 4;
+        const n = 5;
+        let arr = new Array(m);
+        for (let i = 0; i < arr.length; i++) {
+            arr[i] = new Array(n);
+        }
+        console.log(arr);
+
+        // 使用文字符号方法
+        const m2 = 4;
+        const n2 = 5; // Note 2nd dimention is not relevant here
+        let arr2 = [];
+        for (var i = 0; i < m2; i++) {
+            arr2[i] = [];
+        }
+        console.log(arr2); // Output: [ [], [], [], [] ]
+
+
+        // 使用Array.from
+        /*
+          Array.from(object, mapFunction, thisValue)
+            object 必需。需转换为数组的对象。
+            mapFunction	可选。对数组的每个项目调用的 map 函数。
+        */
+        const m3 = 4;
+        const n3 = 5;
+        let arr3 = Array.from(Array(m3), () => new Array(n3));
+        console.log(arr3);
+
+
+        // Array.prototype.map（）方法
+        const m4 = 4;
+        const n4 = 5;
+        let arr4 = Array(m4).fill().map(() => Array(n4));//需要先fill才可以遍历调用map
+        console.log(arr4);  
+    </script>
+</body>
+
+</html>

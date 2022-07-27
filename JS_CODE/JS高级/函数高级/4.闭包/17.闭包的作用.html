@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 
+        1.使用函数内部的变量在函数执行完毕后，仍然存活在内存中（延长了
+           局部变量的生命周期）
+        书中表述：外部函数在执行完毕后，其作用域链销毁，但由于其活动对象
+         被内部函数调用，仍然保存在内存中，直到内部函数被销毁才会销毁。
+              
+        2.让函数外部可以操作（读写）到函数内部的数据（变量/函数）
+
+        问题:
+         1.函数执行完后，函数内部声明的局部变量是否还存在
+           一般不存在，存在于闭包中的变量才可能存在
+           如果其活动对象不在其他的作用域链中则会被销毁（就是没有引用就不存在）
+         2.在函数外部能直接访问函数内部的局部变量吗
+           不能，但是通过闭包让外部操作它
+     -->
+     <script>
+         //外部函数可以操作到内部的a，使得其自加1，且只改变a
+          function fn1(){
+             var a = 2;
+             function fn2(){
+                 a++;
+                 console.log(a);
+             };
+             return fn2;
+         };
+         var f = fn1();//此处关联到fn2，即引用fn2，所以fn2函数对象不会销毁
+         f();//3
+         f();//4
+     </script>
+</head>
+<body>
+    
+</body>
+</html>

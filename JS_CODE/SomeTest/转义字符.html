@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h3></h3>
+    <script>
+        // 将<, >, &, “ 进行转义
+        function escapeHtml(str) {
+            return str.replace(/[<>“&]/g, function (match) {
+                switch (match) {
+                    // 使用的是html的转义字符（实体）
+                    case "<":
+                        return "&lt;";
+                    case ">":
+                        return "&gt;";
+                    case "&":
+                        return "&amp;";
+                    case "\“":
+                        return "&quot;";
+                }
+            })
+        }
+        let res = escapeHtml("dhui<dhui&nd>hcsu“jdiw")
+        let h3 = document.getElementsByTagName('h3')[0]
+        h3.innerHTML = res;
+    </script>
+</body>
+
+</html>

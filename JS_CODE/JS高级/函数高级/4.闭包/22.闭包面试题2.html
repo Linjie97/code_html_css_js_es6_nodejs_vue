@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function fun(n,o){
+            console.log(o);
+            return{
+                fun:function(m){
+                    return fun(m,n);//匿名函数调用的是全局的函数fun
+                    //此处有闭包，内部函数调用外部函数的n并传回去作o
+                }
+            };
+        };
+        //要调用外部函数才能产生闭包，调用内部函数不会产生闭包
+        //a表示返回的对象，然后调用对象的fun方法，不执行外部函数
+        var a = fun(0); //undefined(因为只传一个值给n，o没有赋值)
+        //其实下一句执行的都是fun(0).fun(n)；产生的闭包没有累加就消失了
+        a.fun(1); a.fun(2); a.fun(3);//0，0,0
+
+        var b = fun(0).fun(1).fun(2).fun(3);//undefined，0,1,2
+        
+        var c = fun(0).fun(1); c.fun(2); c.fun(3);//undefined,0,1,1
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function Phone(price,brand){
+            this.price = price;
+            this.brand = brand;
+        }
+        Phone.prototype.call = function(){
+            console.log('我可以打电话');
+        }
+        // 继承
+        function SmartPhone(price,brand,size,color){
+            Phone.call(this,price,brand)
+            this.size = size;
+            this.color = color;
+        }
+        SmartPhone.prototype = new Phone;
+        SmartPhone.prototype.constuctor = SmartPhone;
+
+        const huawei = new SmartPhone(1999,'华为',5.4,'green');
+        console.log(huawei);
+        huawei.call();
+    </script>
+    <script>
+        // 使用class
+        class Phone2{
+            constructor(price,brand){
+                this.price = price;
+            this.brand = brand;
+            }
+            call(){
+                console.log('我可以打电话');
+            }
+        }
+
+        class SmartPhone extends Phone2{
+            constructor(price,brand,size,color){
+                super(price,brand);
+                this.size = size;
+            this.color = color;
+            }
+        }
+        const huawei2 = new SmartPhone(1999,'华为',5.4,'green');
+        console.log(huawei2);
+        huawei2.call();
+    </script>
+</body>
+</html>

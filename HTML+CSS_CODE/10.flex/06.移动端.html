@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- 需要注释这两行才能看移动端效果 -->
+    <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge"> -->
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+    <title>Document</title>
+    <style>
+        .box1{
+            width: 900px;
+            height: 100px;
+            background-color: #bfa;
+        }
+    </style>
+</head>
+<body>
+    <!-- 
+        在不同的屏幕中，单位像素的大小是不同的，像素越小屏幕会越清晰
+             自己电脑 24寸 1920*1080
+             iPhone6 4.7寸 750*1334
+                应该是用寸除以像素点的结果
+             智能手机的像素要 远远小于 计算机的像素点
+
+             问题：一个宽度为900px的网页在iPhone6中要如何显示？
+
+             默认情况下，移动端的网页都会将视口设置为980像素（css像素）
+                  以确保pc端网页可以在移动端正常访问，但是如果网页宽度超过980，
+                  移动端的浏览器会自动对网页进行缩放以显示完整网页
+
+             https://material.io/blog/device-metrics（只有这个且进不去）
+              https://material.io/resources/devices/（老师给的，查手机像素）
+
+            所以基本上大部分pc端网站都可以在移动端中正常浏览，但是往往不会有一个好的体验
+                 为了解决这个问题，大部分网站会专门为移动端设计网页
+     -->
+
+     <div class="box1"></div>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        /*
+           通过关系运算符可以比较两个值之间的大小关系
+             关系成立返回true，关系不成立返回false
+
+             >大于号
+             >=大于等于号
+             <小于号
+             <=小于等于号
+             
+             非数值的情况
+               -对于非数值的情况，会先将其转换为数值再进行比较
+               -如果符号两侧的值都是字符串，不会将其转换为数值进行比较，
+                   而会分别比较字符串的Unicode编码
+
+        */
+        console.log(1>true);//false
+        console.log(1>=true);//true
+        console.log(1 > "0");//true
+        console.log(10 > null);//true
+        //任何值和NaN做任何比较都是false
+        console.log(10 > "hello");//false
+
+        //比较两个字符串时，比较的是字符串的字符编码
+        console.log("a">"b");//false
+        console.log("a"<"b");//true
+        //比较字符串编码时是一位一位进行比较
+        console.log("abc"<"b");//true
+        console.log("bbc"<"b");//false
+
+        //因此如果比较两个字符串类型的数字，可能会得到不可预期的结果
+        console.log("11238746"<"5");//true
+        //将其中一个改成数字类型的即可（转型）
+        console.log("11238746" < +"5");//false
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

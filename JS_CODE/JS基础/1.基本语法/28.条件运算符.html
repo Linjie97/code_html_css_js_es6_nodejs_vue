@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        /*
+           条件运算符也叫三元运算符
+             语法：
+                   条件表达式？语句1：语句2；
+                -执行流程：
+                    条件表达式计算，如果结果为true，执行语句1，并返回执行结果；
+                     如果结果为false执行语句2，并返回执行结果
+                如果条件的表达式计算结果是一个非布尔值，会将其转换为布尔值
+        */
+       true?alert("语句1"):alert("语句2");
+       //获取a和b中的最大值并返回
+       var max = a>b ? a : b ;
+       //获取abc中的最大值
+       var max = a > b ?(a > c ? a : c) : (b > c ? b : c);
+       //这种写法不推荐使用，不方便阅读
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

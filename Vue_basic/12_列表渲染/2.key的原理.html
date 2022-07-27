@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2.key的原理</title>
+    <!-- 引入Vue -->
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+    <!-- 准备好容器 -->
+    <div id="root">
+       <h2>人员列表(遍历数组)</h2>
+       <button @click.once="add">添加一个老刘（要求放在张三前面）</button>
+       <ul>
+           <!-- key用在vue的虚拟DOM算法，实际生成DOM结构的时候不会有key属性，
+            因此key只能被vue调用.不写key的情况下vue默认将index作为key的标识，
+            一般插入在尾部是不会出错，但这种从头插入破坏顺序的操作就会有错误 -->
+           <li v-for="(p,index) of persons" :key="p.id">
+               {{p.name}}--{{p.age}}
+               <input type="text">
+           </li>
+       </ul>
+    </div>
+
+    <script>
+        Vue.config.productionTip = false;//设置为 false 以阻止 vue 在启动时生成生产提示。
+
+        new Vue({
+            el:'#root',
+            data:{
+                persons:[
+                    {id:'001',name:'张三',age:18},
+                    {id:'002',name:'李四',age:19},
+                    {id:'003',name:'王五',age:20},
+                ],
+             },
+             methods: {
+                 add(){
+                     //实际只需要将name和age传给服务器，会自动生成id
+                     const p = {id:'004',name:'老刘',age:40};
+                     this.persons.unshift(p);
+                 }
+             },
+        });
+    </script>
+</body>
+</html>

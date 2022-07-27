@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #box1 {
+            width: 100px;
+            height: 100px;
+            background-color: #bfa;
+        }
+    </style>
+    <script>
+        window.onload = function () {
+            //点击按钮后读取box1的样式
+            var box1 = document.getElementById("box1");
+            var btn01 = document.getElementById("btn01");
+            btn01.onclick = function () {
+                //获取元素当前正在显示的样式
+                /*
+                  语法：元素.currentStyle.样式名
+                    只能用于IE浏览器，其余的会报错
+                */
+                // alert(box1.currentStyle.width);
+
+
+                /*
+                  其余浏览器和IE8以上可以使用：
+                    getComputedStyle()来获取元素当前的样式
+                    这个方法是window方法，可以直接使用
+                  需要两个参数：
+                       第一个，要获取样式的元素
+                       第二个，可以传递一个伪元素，一般都传null
+                  该方法会返回一个对象，对象中封装了当前元素对应的样式
+                    可以通过对象.样式名来读取样式
+
+                   如果获取的样式没有设置，则会读取到真实值，而不是默认值
+                     比如没有设置width，不会获取到auto而是网页的宽度
+
+                 currentStyle和getComputedStyle（）读取到的样式都是只读的
+                     不能修改，要修改必须通过style属性
+                */
+                // var obj = getComputedStyle(box1, null);
+                // alert(obj);//[object CSSStyleDeclaration]
+
+                // alert(getComputedStyle(box1, null).width);
+
+
+                //正常浏览器
+                //    alert(getComputedStyle(box1,null).backgroundColor);
+                //IE8
+                //    alert(box1.currentStyle.backgroundColor);
+                //两种都兼容，自己定义
+                alert(getStyle(box1, "width"));
+            };
+        };
+
+        //定义一个函数，用来获取指定元素的当前样式
+        //参数：obj要获取样式的元素   name要获取的样式名
+        function getStyle(obj, name) {
+            //如果判别条件是getComputedStyle，作为变量在函数作用域及全局中查找，
+            //找不到会报错；而判别条件是window.getComputedStyle，作为
+            //对象.属性查找，找不到会返回undefined
+
+            // if (window.getComputedStyle) {
+            //     //正常浏览器有getComputedStyle（）方法
+            //     return getComputedStyle(obj, null)[name];
+            // }else{
+            // //IE8
+            // return obj.currentStyle[name];
+            // }
+
+            //可以简化为 三目运算符
+            return window.getComputedStyle?getComputedStyle(obj, null)[name]:obj.currentStyle[name];
+
+            //上面和下面两种方法本质上没有区别，可以兼容所有浏览器，
+            //更建议使用上面的方法，可以优先用getComputedStyle，更多浏览器兼容
+
+            // if(obj.currentStyle){
+            //     return obj.currentStyle[name];
+            // }else{
+            //     return getComputedStyle(obj, null)[name];
+            // }
+        }
+    </script>
+</head>
+
+<body>
+    <button id="btn01">点我一下</button>
+    <br><br>
+    <div id="box1"></div>
+</body>
+
+</html>

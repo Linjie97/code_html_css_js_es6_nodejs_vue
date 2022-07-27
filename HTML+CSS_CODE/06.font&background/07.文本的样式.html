@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div{
+            width: 500px;
+            border: 1px red solid;
+
+            /* 
+               text-align:文本的水平对齐
+                  可选值：
+                      left  左侧对齐
+                      right  右侧对齐
+                      center  居中对齐
+                      justify  两端对齐
+            */
+            /* text-align: justify; */
+
+            font-size: 50px;
+        }
+
+        span{
+            font-size: 20px;
+            border: 1px blue solid;
+
+            /* 
+               vertical-align 设置元素垂直对齐的方式
+                   可选值： 
+                       baseline 默认值 基线对齐
+                       top 顶部对齐
+                       bottom 底部对齐
+                       middle  居中对齐
+            */
+            vertical-align: middle;
+        }
+
+        p{
+            border: 1px red solid;
+        }
+
+        img{
+            vertical-align: top;
+            /* 只有不是默认值即可，消除图片跟p的边框的缝隙 */
+        }
+    </style>
+</head>
+<body>
+    
+    <div>
+        今天天气 hello<span>真不错hello</span>！
+    </div>
+
+    <p>
+        <img src="../exercise/tupian/01/1.jpg" alt="">
+    </p>
+
+
+    <!-- <div>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum corrupti expedita accusamus asperiores porro, odit dolorem! Cumque illo neque doloremque soluta quis explicabo, enim, minus eveniet in facere id ipsa.
+    </div> -->
+</body>
+</html>

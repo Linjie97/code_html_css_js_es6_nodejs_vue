@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promise.prototype.then</title>
+</head>
+<body>
+    <script>
+        //创建 promise 对象
+        const p = new Promise((reslove,reject) => {
+            //使用promise封装异步任务
+            setTimeout(() => {
+                reslove('用户数据');
+            },1000)
+        });
+
+        //调用 then 方法 
+        //先执行主线程，再执行回调，因此先出result结果，再出then结果
+        //then方法的返回结果是 Promise 对象，对象状态由回调函数的执行结果决定
+        /*
+          1.如果回调函数中返回的结果是 非promise 类型的属性，状态为成功，
+            返回值为对象的成功的值 即[[PromiseResult]]: 123，没有return
+            默认为undefined
+        */
+       /*
+         2.如果回调函数中返回的结果是 promise 对象，该内部对象成功，则外部的
+           promise对象（then方法的返回结果）成功，且返回值为内部对象成功的值，
+           此时[[PromiseState]]: "fulfilled"   [[PromiseResult]]: "ok"；
+           内部对象失败，则外部的也失败，返回值就是内部失败的值
+           [[PromiseState]]: "rejected"  [[PromiseResult]]: "error"。
+       */
+      /*
+        3.抛出错误  则返回的状态为失败，错误值为抛出来的值
+      */
+        // const result = p.then(value => {
+        //     console.log(value);
+
+        //     //1.非 promise 类型的属性
+        //     // return 123;
+
+        //     // //2.是 promise 对象
+        //     // return new Promise((reslove,reject) => {
+        //     //     reslove('ok');
+        //     //     // reject('error');
+        //     // });
+
+        //     //3.抛出错误
+        //     throw new Error('出错啦！');
+        
+        // },reason => {
+        //     console.warn(reason);
+        // });
+
+        //链式调用
+        p.then(value =>{
+
+        },reason => {
+
+        }).then(value=>{
+
+        },reason=>{
+
+        });
+        console.log(result);
+    </script>
+</body>
+</html>

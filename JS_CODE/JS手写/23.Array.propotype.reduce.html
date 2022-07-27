@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Array.propotype.reduce</title>
+</head>
+
+<body>
+    <!-- 
+        array.reduce(function(total, currentValue, currentIndex, arr), initialValue)
+        total 必需。initialValue，或函数先前返回的值
+        currentValue 必需。当前元素的值。
+        返回值是返回上次调用回调函数的累积结果。
+        reduce() 方法将数组缩减为单个值。为数组的每个值（从左到右）执行提供的函数。
+        函数的返回值存储在累加器中（结果/总计）。
+
+        如果需要回调函数从数组索引为 0 的元素开始执行，则需要传递初始值。否则，数组索引为 0 的元素
+        将被作为初始值 initialValue，迭代器将从第二个元素开始执行（索引为 1 而不是 0）。
+     -->
+    <script>
+        Array.prototype.reduce2 = function (callback, initialValue) {
+            if (this == null) {
+                throw new TypeError('this is null or not defined')
+            }
+            if (typeof callback !== "function") {
+                throw new TypeError(callback + ' is not a function')
+            }
+            let start = 0, pre
+            // 有传入初始值即使用，没有就是数组的第一个元素开始计算
+            if (initialValue!=null) {
+                pre = initialValue
+            } else {
+                pre = this[0]
+                start = 1
+            }
+            for (let i = start; i < this.length; i++) {
+                pre = callback(pre, this[i], i, this)
+            }
+            return pre
+        }
+        // 测试
+        arr = [1.3, 2, 3.6, 54, 7.3]
+        result = arr.reduce2((total, item, index, arr) => {
+            return total + Math.round(item)//四舍五入数组中所有数字并显示总和
+        }, 0)
+        console.log(arr, result);
+    </script>
+
+    <script>
+        Array.prototype.myReduce = function (callback, ...initial) {
+            let start = 0, pre
+            // 有传入初始值即使用，没有就是数组的第一个元素开始计算
+            if (initial.length) {
+                pre = initial[0]
+            } else {
+                pre = this[0]
+                start = 1
+            }
+            for (let i = start; i < this.length; i++) {
+                pre = callback(pre, this[i], i, this)
+            }
+            return pre
+        }
+        // 测试
+        arr = [1.3, 2, 3.6, 54, 7.3]
+        result = arr.myReduce((total, item, index, arr) => {
+            return total + Math.round(item)//四舍五入数组中所有数字并显示总和
+        }, 3)
+        console.log(arr, result);
+    </script>
+</body>
+
+</html>

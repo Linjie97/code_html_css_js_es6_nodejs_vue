@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3.姓名案例_计算属性实现</title>
+    <!-- 引入Vue -->
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+    <!-- 
+        计算属性：
+           1.定义：要用的属性不存在，要通过已有属性（要在vue的管理下的属性）计算得来。
+           2.原理：底层借助了Object.defineProperty方法提供的setter和getter。
+           3.get函数什么时候执行？
+             （1）初次读取时会执行一次
+             （2）当依赖的数据发生改变时会被再次调用
+            4.优势：与methods实现相比，内部有缓存机制（复用），效率更高，调试方便
+            5.备注：
+              （1）计算属性最终会出现在vm上，直接读取使用即可
+              （2）如果计算属性要被修改，必须写set函数去响应修改，且set中要引起计算式
+                   依赖的数据发生变化
+     -->
+    <!-- 准备好容器 -->
+    <div id="root">
+       姓: <input type="text" v-model="firstName"><br><br>
+       名: <input type="text" v-model="lastName"><br><br>
+       全名: <span>{{fullName}}</span> 
+    </div>
+
+    <script>
+        Vue.config.productionTip = false;//设置为 false 以阻止 vue 在启动时生成生产提示。
+
+        const vm = new Vue({
+            el:'#root',
+            data:{//对于vue来说data中的数据就是属性
+                firstName:'张',
+                lastName:'三',
+             },
+             //注意：vm中的fullName并不是计算属性中写的fullName，在往vm传的时候是调用get方法，
+             //拿到其返回值放在vm里面，将其命名为fullName，因此不可以fullName.get(),报错
+             computed: {
+                 fullName:{
+                     //get 当有人读取fullName时，get就会被调用，且返回值就作为fullName的值
+                     //底层用的就是Object.defineProperty方法
+
+                     //get什么时候调用？1.初次读取fullName时get会被调用，后面会将该值存进缓存；
+                     //2.所依赖的数据（这里就是指firstName和lastName）发生变化时。
+                     get(){
+                         console.log('get被调用了');
+                         //vue中会将这里的get指向的this调成vm
+                        //  console.log(this);//vue实例对象 vm
+                         return this.firstName + '-' + this.lastName;
+                     },
+                     //当fullName被修改时调用set方法
+                     set(value){
+                         console.log('set',value);
+                         const arr = value.split('-');
+                         this.firstName = arr[0];
+                         this.lastName = arr[1];
+                     },
+                 }
+             },
+        });
+    </script>
+</body>
+</html>

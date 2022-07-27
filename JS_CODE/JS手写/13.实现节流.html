@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>03.实现节流</title>
+</head>
+<body>
+    <button>点击+1</button>
+    <script>
+        // 实现方式：每次触发事件时，如果当前有等待执行的延时函数，则直接return
+        // 节流：用户操作很频繁，但是把频繁的操作变为少量操作【给浏览器充裕的时间去解析】
+        function throttle(fn,delay){
+            let timer;
+            return function(){
+                // 这里表示timer为true则return false
+                if(timer) return false;
+                timer = setTimeout(()=>{
+                    // fn();
+                    fn.apply(this,arguments);
+                    clearTimeout(timer);
+                    // 在setTimeout执行完毕后再把timer设置为null，表示可以执行下一次循环
+                    timer = null;
+                },delay)
+            }
+        }
+
+        // function throttle(fn,delay){
+        //     let timer;
+        //     return function(){
+        //         if(timer) return false;
+        //         timer = setTimeout(()=>{
+        //             fn.apply(this,arguments);
+        //             clearTimeout(timer);
+        //             timer = null;
+        //         },delay)
+        //     }
+        // }
+
+        let count = 0;
+        let button = document.querySelector('button');
+        button.onclick = throttle(function(){
+            count++;
+            console.log(count);
+        },1000);
+    </script>
+</body>
+</html>

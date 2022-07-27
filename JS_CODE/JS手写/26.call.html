@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>call</title>
+</head>
+
+<body>
+    <!-- 
+        使用一个指定的 this 值和一个或多个参数来调用一个函数。
+        实现要点：this 可能传入 null；传入不固定个数的参数；函数可能有返回值
+     -->
+    <script>
+        Function.prototype.call2 = function (context) {
+            // ctx为我们要this指向的对象，如果不存在就是指向window
+            var context = context || window;
+            // 将当前调用call的函数（this）作为context的一个方法fn
+            context.fn = this;
+
+            var args = [];
+            // 传入的其他实参
+            for (var i = 1, len = arguments.length; i < len; i++) {
+                args.push('arguments[' + i + ']');
+            }
+
+            var result = eval('context.fn(' + args + ')');
+
+            delete context.fn
+            return result;
+        }
+
+        // 偏向于记住以下的方法
+        Function.prototype.myCall = function (ctx) {
+            ctx = ctx || window;
+            let fn = Symbol();//使用Symbol生成一个独一无二的值，一般用于对象的属性上
+            ctx[fn] = this;
+            // 截取实参，从第二个参数开始，第一个参数是传入的this对象
+            let args = [...arguments].splice(1);
+            // fn.call()在改变this指向后会默认执行这函数，所以执行函数的操作我们也要在函数中执行。
+            let result = ctx[fn](...args);
+            // 执行完之后，其实有用的只有result，我们要把之前辅助用的ctx[fn]删掉
+            delete ctx[fn];
+            return result;
+        };
+
+        // 测试
+        var name = "window.name"
+        function fn() {
+            console.log(this.name);
+        }
+
+        let obj = {
+            name: "微信公众号: Code程序人",
+        };
+        fn()
+        fn.call(obj);
+        fn.call2(obj);
+        fn.myCall(obj)
+    </script>
+</body>
+
+</html>

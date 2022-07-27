@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        /*
+           BOM: browser object mmodel 浏览器对象模型
+             -BOM可以使我们通过JS操作浏览器
+             -在BOM中为我们提供了一组对象，用来完成对浏览器的操作
+             -BOM对象：
+                 Window 
+                   -代表的是整个浏览器的窗口，同时Window也是网页中的全局对象
+                 Navigator
+                   -代表的是当前浏览器的信息，通过该对象可以来识别不同的浏览器
+                 Location
+                   -代表当前浏览器的地址栏信息（网址）,通过Location可以获取
+                    地址栏信息，或者操作浏览器跳转页面
+                 History
+                   -代表浏览器的历史记录，可以通过该对象来操作浏览器的历史记录
+                     由于隐私原因，该对象不能获取到具体的历史记录，只能操作
+                     浏览器向前或向后翻页，且该操作只在当次访问有效
+                 Screen
+                   -代表用户的屏幕的信息，通过该对象可以获取到用户的显示器的
+                    相关信息，多用于移动端
+
+                后四个BOM对象在浏览器中都是作为window对象的属性保存的
+                  可以通过window对象来使用，也可直接使用（因为是全局对象）
+                注意在使用是首字母是小写的
+        */
+
+        // console.log(window);
+        /*
+          Navigator
+           -代表的是当前浏览器的信息，通过该对象可以来识别不同的浏览器
+           -由于历史原因，Navigator对象中的大部分属性都已经不能帮我们识别浏览器
+           -一般只使用userAgent 属性来判断浏览器的信息（可认为等同于浏览器）
+             userAgent 是一个字符串，包含有用来描述浏览器信息的内容
+             返回由浏览器发送到服务器的用户代理报头（user-agent header）
+             不同浏览器的userAgent不同
+             如今无法用userAgent辨别IE11了
+        */
+        //    console.log(navigator.appName);//Netscape 网景公司
+        //    console.log(navigator.userAgent);//edge内核是Chrome
+
+        var ua = navigator.userAgent;
+        //用正则表达式检查
+        if (/chrome/i.test(ua)) {
+            alert("Chrome");
+        }else if(/firefox/i.test(ua)){
+            alert("你是火狐");
+        }else if(/msie/i.test(ua)){
+            alert("你是IE");
+        }else if("ActiveXObject" in window){
+            alert("你是IE11");
+        }
+       /*
+           如果通过userAgent不能判断IE，还可以通过一些浏览器中特有的对象来判断
+           比如 ActiveXObject  
+           if(window.ActiveXObject){
+               alert("你是IE");
+           }
+           但是IE11又不行，布尔值是false，改成
+            if("ActiveXObject" in window){
+               alert("你是IE");
+           }
+        */
+
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        /*
+           this是什么
+             任何函数本质上都是通过某个对象来调用的，没有指定就是window
+             所有函数内部都有一个变量this，它的值是调用函数的当前对象
+           
+           如何确定this的值（以下文为例）
+              test() : window
+              p.test() : p
+              new test() : 新创建的对象
+              p.call(obj) : obj
+        */
+        function Person(color){
+            console.log(this);
+            this.color = color;
+            this.getColor = function(){
+                console.log(this);
+                return this.color;
+            };
+            this.setColor = function(color){
+                console.log(this);
+                this.color = color;
+            };
+        }
+
+        //反正也是函数，当然也可以这样调用
+        Person("red");//this是谁  Window
+
+        var p = new Person("yellow");//this是谁  p，也可以说是Person{}
+
+        p.getColor();//this是谁  p
+
+        var obj = {};
+        p.setColor.call(obj,"black");//this是谁  obj
+
+        var test = p.setColor;//这里是将setPerson函数赋给test
+        test();//this是谁  window  直接调用函数this就是window
+        //this以函数的形式调用指向window，以方法的形式调用指向调用方法的对象
+
+        function fun1(){
+            function fun2(){
+                console.log(this);
+            }
+            fun2();//this是谁  window
+        };
+        fun1();
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

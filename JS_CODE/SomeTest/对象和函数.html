@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function f1(){
+            var tmp = 1;
+            this.x = 3;
+            console.log(tmp);//A
+            console.log(this.x);//B
+        }
+        var obj = new f1();//1
+        console.log(obj.x);//2
+        console.log(f1());//3
+    </script>
+    <!-- 这道题的结果是1，3，3，1，3，undefined -->
+    <!--  代码1实例化f1这个类，相当于执行了f1函数，此时A会输出1，B处this代表的是当前的实例对象obj，
+        因此B输出3，而且代码2也输出3。重点在代码3这里，f1作为一个函数执行，this表示的是window，this.x
+        就是一个全局变量，也就是3.最后由于f1没有返回值，那么console.log的结果是undefined-->
+</body>
+</html>

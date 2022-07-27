@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /*
+          ES6允许按照一定模式从数组和对象中提取值，对变量进行赋值，
+          这被称为解构赋值
+          作用：当重复调用数组或对象中的属性或方法时，不用重复使用数组名
+                或对象名
+                解构个人理解就是在同名基础上简写
+        */
+       
+        //1.数组的解构
+        const F4=['A','B','C','D'];
+        let [a,b,c,d]=F4;//用var声明也可
+        console.log(a,b,c,d);
+
+        //2.对象的解构
+        const zhao = {
+            name:'赵本山',
+            age:'55',
+            xiaopin:function(){
+                console.log("我是黑土");
+            }
+        };
+        //这里需要跟属性或方法同名
+        let {name,age,xiaopin}=zhao;
+        console.log(name,age,xiaopin);
+        // xiaopin();
+        // let {xiaopin}=zhao;
+        // console.log(xiaopin);
+    </script>
+</body>
+</html>

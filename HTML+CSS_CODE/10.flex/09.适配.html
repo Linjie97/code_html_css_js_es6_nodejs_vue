@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+
+        html{
+            /* 
+              网页中字体大小最小是12px,不能设置一个比12像素还小的字体。
+              如果我们设置了一个小于12px的字体，则字体自动设置为12.
+              but 我用的Chrome生效了又仿佛没有生效，font-size还是12px，不对。
+              直接将0.1333333vw扩大100倍吧
+            */
+            font-size: 13.3333333vw;
+            /*  100vw =750px(设计图的像素)  0.133333333vw = 1px */
+        }
+        .box1{
+            /* 
+              rem
+                 1rem = 1 html的字体大小
+            */
+            width: 0.48rem;
+            height: 0.35rem;
+            background-color: #bfa;
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- 
+        48 *35
+     -->
+     <div class="box1"></div>
+</body>
+</html>

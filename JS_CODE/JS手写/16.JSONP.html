@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSONP</title>
+</head>
+
+<body>
+    <!-- https://blog.csdn.net/weixin_44116302/article/details/124440154 
+        可以自己搭一个服务器,我就没搭了
+    -->
+    <!--   
+        这两个script的意思是          
+         创建一个callbackName函数，但是还没有被调用
+         加载src中的资源，并等待请求的内容返回 -->
+    <script type='text/javascript'>
+        window.jsonpCallback = function (res) {
+            console.log(res)
+        }
+    </script>
+    <script src='http://localhost:8080/api/jsonp?id=1&cb=jsonpCallback' 
+    type='text/javascript'></script>
+
+    <script>
+        function JSONP({
+            url,
+            params = {},
+            callbackKey = 'cb',
+            callback
+        }) {
+            // 定义本地的唯一callbackId，若是没有的话则初始化为1
+            JSONP.callbackId = JSONP.callbackId || 1;
+            let callbackId = JSONP.callbackId;
+            // 把要执行的回调加入到JSON对象中，避免污染window
+            JSONP.callbacks = JSONP.callbacks || [];
+            JSONP.callbacks[callbackId] = callback;
+            // 把这个名称加入到参数中: 'cb=JSONP.callbacks[1]'
+            params[callbackKey] = `JSONP.callbacks[${callbackId}]`;
+            // 得到'id=1&cb=JSONP.callbacks[1]'
+            const paramString = Object.keys(params).map(key => {
+                return `${key}=${encodeURIComponent(params[key])}`
+            }).join('&')
+            // 创建 script 标签
+            const script = document.createElement('script');
+            script.setAttribute('src', `${url}?${paramString}`);
+            document.body.appendChild(script);
+            // id自增，保证唯一
+            JSONP.callbackId++;
+
+        }
+        JSONP({
+            url: 'http://localhost:8080/api/jsonps',
+            params: {
+                a: '2&b=3',
+                b: '4'
+            },
+            callbackKey: 'cb',
+            callback(res) {
+                console.log(res)
+            }
+        })
+        JSONP({
+            url: 'http://localhost:8080/api/jsonp',
+            params: {
+                id: 1
+            },
+            callbackKey: 'cb',
+            callback(res) {
+                console.log(res)
+            }
+        })
+    </script>
+
+
+
+
+    <!-- <script>
+        /*
+          JSONP 核心原理：script 标签不受同源策略约束，所以可以用来进行跨域请求，
+          优点是兼容性好，但是只能用于 GET 请求；
+          实现：创建一个script，然后将请求地址放到src属性中，以及将该script插入到文档中
+        */
+        const jsonp = ({ url, params, callbackName }) => {
+            const generateUrl = () => {
+                let dataSrc = ''
+                for (let key in params) {
+                    if (params.hasOwnProperty(key)) {
+                        dataSrc += `${key}=${params[key]}&`
+                    }
+                }
+                dataSrc += `callback=${callbackName}`
+                return `${url}?${dataSrc}`//将对应的url和携带的参数拼起来返回
+            }
+            // jsonp使用promise？？
+            return new Promise((resolve, reject) => {
+                const scriptEle = document.createElement('script')
+                scriptEle.src = generateUrl()
+                document.body.appendChild(scriptEle)
+                window[callbackName] = data => {
+                    resolve(data)
+                    document.removeChild(scriptEle)
+                }
+            })
+        }
+    </script> -->
+</body>
+
+</html>

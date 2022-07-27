@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+
+        function MyClass(){
+        }
+
+        //向MyClass的原型中添加一个name属性
+        MyClass.prototype.name = "我是原型中的name";
+
+        var mc = new MyClass();
+        mc.age = 18;
+        // console.log(mc.name);
+
+        //使用in检查对象中是否含有某个属性时，如果对象中没有但是原型中有也会返回true
+        // console.log("name" in mc);
+
+        //可以使用当前对象的hasOwnProperty（）来检查对象自身中是否含有该属性
+        //使用该方法只有当对象自身含有该属性时，才会返回true
+        console.log(mc.hasOwnProperty("age"));//true
+        console.log(mc.hasOwnProperty("hasOwnProperty"));//false
+        
+        /*
+          原型对象也是对象，所以它也有原型
+              当我们使用一个对象的属性或方法时，会先在自身中寻找，
+                自身中有则直接使用，没有就去原型对象中找；如果原型对象中有，
+                则直接使用；如果原型对象中没有，则去原型的原型对象中找，
+                直到找到Object对象的原型，Object对象的原型没有原型。
+                如果在Object中没有找到，则返回undefined
+                (就是java中继承的概念，子类会继承父类的属性)
+        */
+        console.log(mc.__proto__.hasOwnProperty("hasOwnProperty"));//false
+
+        console.log(mc.__proto__.__proto__.hasOwnProperty("hasOwnProperty"));
+        //true
+
+        
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

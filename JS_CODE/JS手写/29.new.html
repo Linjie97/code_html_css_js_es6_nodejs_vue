@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>new</title>
+</head>
+
+<body>
+    <!-- 
+        new 会产生一个新对象；新对象需要能够访问到构造函数的属性，所以需要重新指定它的原型；
+        构造函数可能会显示返回；
+     -->
+    <script>
+        function objectFactory() {
+            var obj = new Object()//创建对象
+            Constructor = [].shift.call(arguments);
+            obj.__proto__ = Constructor.prototype;
+            var ret = Constructor.apply(obj, arguments);
+
+            // ret || obj 这里这么写考虑了构造函数显示返回 null 的情况
+            return typeof ret === 'object' ? ret || obj : obj;
+        };
+
+        // fn是构造函数
+        function myNew(fn, ...args) {
+            const obj = {};//创建对象
+            obj.__proto__ = fn.prototype;
+            // 改变this指向
+            let result = fn.apply(obj, args)
+            // return result
+            // 确保new出来的是一个对象
+            return typeof result === "object" ? result || obj: obj
+        }
+
+        function person(name, age) {
+            this.name = name
+            this.age = age
+        }
+        let p = objectFactory(person, '布兰', 12)
+        let p2 = myNew(person, 'zlj', 25)
+        console.log(p)  // { name: '布兰', age: 12 }
+        console.log(p2)  // { name: '布兰', age: 12 }
+    </script>
+</body>
+
+</html>

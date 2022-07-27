@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数组扁平化</title>
+</head>
+<body>
+    <script>
+        // es5  递归
+        function flatten(arr){
+            let result = [];
+            for(let i=0;i<arr.length;i++){
+                if(Array.isArray(arr[i])){
+                    result = result.concat(flatten(arr[i]))
+                }else{
+                    result.push(arr[i])
+                }
+            }
+            return result;
+        }
+        let res = [1,4,8,[4,5,8],[1,[4,5]]]
+        console.log(flatten(res));
+
+        
+        // es6   Array.prototype.flat
+        let flatten2 = arr => arr.flat()//可以传参数，展开几层
+
+        // es6
+        function flatten3(arr){
+            // 这里使用while类似于上面用递归
+            while(arr.some(item=>Array.isArray(item))){
+                arr = [].concat(...arr);
+            }
+            return arr;
+        }
+        console.log(flatten3(res));
+    </script>
+</body>
+</html>

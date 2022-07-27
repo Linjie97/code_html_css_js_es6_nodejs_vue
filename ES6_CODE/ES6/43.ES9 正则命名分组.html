@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>正则扩展-命名捕获分组</title>
+  </head>
+  <body>
+    <script>
+      // //声明一个字符串
+      // let str = '<a href="http://www.atguigu.com">尚硅谷</a>'
+      // //提取 url 与 标签文本
+      // const reg = /<a href="(.*)">(.*)<\/a>/
+
+      // //执行
+      // const result = reg.exec(str);
+      // console.log(result);//此时groups的值是undefined
+      // //结果是一个数组，第一个数据是要执行的字符串，
+      // //第二个是第一个（）内容，第三个是第二个（）内容
+      // console.log(result[1]);//http://www.atguigu.com
+      // console.log(result[2]);//尚硅谷
+
+      //声明一个字符串
+      let str = '<a href="http://www.atguigu.com">尚硅谷</a>';
+      //提取 url 与 标签文本
+      const reg = /<a href="(?<url>.*)">(?<text>.*)<\/a>/;
+        const result = reg.exec(str);
+        console.log(result);//此时groups的值是{url: 'http://www.atguigu.com', text: '尚硅谷'}
+        //对捕获结果添加属性方便提取，以后即使增加提取项数组下标改变也容易查找
+        console.log(result.groups.url);//http://www.atguigu.com
+        console.log(result.groups.text);//尚硅谷D
+    </script>
+  </body>
+</html>

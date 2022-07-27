@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box1{
+            width: 200px;
+            height: 200px;
+            background-color: #bfa;
+
+            border-width: 10px 20px 30px 40px;
+            border-color: orange red blue green;
+            border-style: solid;
+        }
+        /* 
+           border-width可以省略，会有一个默认值，一般是三个像素 
+           border-width可以用来指定四个方向的边框的宽度
+                 border-width: 10px 20px 30px 40px;（顺序：上 右 下 左）
+                 只有三个值（上 左右 下）
+                 只有两个值（上下 左右）
+
+            还可以用以下属性指定一个边的宽度：
+            border-top-width   border-left-width 
+            border-bottom-width   border-right-width        
+
+         border-color 和border-style 的属性设置同上
+
+         border-color没有设定的情况下默认使用color值
+         color实际上代表的是前景色而不是字体颜色
+
+         border-style指定边框的样式：
+               solid  表示实线
+               dotted 点状虚线
+               dashed 虚线
+               double 双线
+           border-style默认值是none  没有边框
+        */
+        /* 
+          border的简写属性：同时该属性同时设置边框所有的相关样式，并且没有顺序要求
+          border:solid 30px orange;
+
+          除此之外border还有四个：border-xxx
+             border-top
+             border-right
+             border-bottom
+             border-left
+
+            border-top:10px solid red; 
+        */
+        
+    </style>
+
+</head>
+<body>
+    <div class="box1"></div>
+</body>
+</html>

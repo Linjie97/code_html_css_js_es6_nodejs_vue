@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>模板字符串</title>
+</head>
+<body>
+    <script>
+        function render(template,data){
+            const reg = /\{\{(\w+)\}\}/;//模板字符串的正则
+            // 正则中(\w+)加了（）应该是表示子表达式，exec方法返回的结果数组中，
+            // 第 0 个元素是与正则表达式相匹配的文本，第1个元素是与第1个子表达式相匹配的文本（如果有的话）
+            if(reg.test(template)){//判断模板里面是否有模板字符串
+                console.log(reg.exec(template));//['{{name}}', 'name']
+                const name = reg.exec(template)[1];//查找当前模板里第一个模板字符串的片段
+                template = template.replace(reg,data[name]);//将第一个模板字符串渲染
+                return render(template,data);//递归渲染 并 返回模板后的结构
+            }
+            return template;//如果模板没有模板字符串 直接 返回
+        }
+
+        let template = '我是{{name}},年龄{{age}},性别{{sex}}';
+        let person = {
+            name:'zlj',
+            age:25
+        }
+        console.log(render(template,person));
+    </script> 
+</body>
+</html> 

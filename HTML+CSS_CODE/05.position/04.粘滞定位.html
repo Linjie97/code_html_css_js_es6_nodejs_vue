@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>导航条</title>
+    <link rel="stylesheet" href="./css/Reset.css">
+    <style>
+
+        body{
+            height: 3000px;
+        }
+
+        .nav{
+            width: 1210px;
+            height: 48px;
+            background-color: #E8E7E3;
+
+            margin: 100px auto;
+
+            position: sticky;
+            top: 10px;
+            /* 
+               粘滞定位：元素的position属性值设置为sticky
+               粘滞定位的特点跟相对定位基本一致，
+               不同的是粘滞定位可以在到达某个位置时将其固定住
+               IE不兼容
+                 
+            */
+        }
+
+        .nav li{
+            float: left;
+            /* 设置li的高度使其跟父元素高度一样 */
+            /* line-height将文字在父元素中垂直居中 */
+            line-height: 48px;
+        }
+
+        .nav a{
+
+            /* 将a转换为块元素 */
+            display: block;
+            /* 去除下划线 */
+            text-decoration: none;
+            color: #777777;
+            font-size: 18px;
+
+            /* 原网站中是对每一个li单独设置宽度，本题中较为简略，设置一个padding，
+               如果是对li设置padding，那么超链接部分就是文字部分，如果对a设置padding，
+               整一个框范围都是超链接。
+            */
+            padding: 0 44px;
+        }
+
+        /* 上述设置会导致a元素无法完全覆盖nav元素，可以改动最后一个a元素的盒子大小 */
+        /* .nav li:last-child a{
+            padding: 0 42px 0 41px;
+        } */
+        .nav a:hover{
+            background-color: #3F3F3F;
+            color: #E8E7E3;
+        }
+    </style>
+</head>
+<body>
+    <!-- 创建导航条的结构 -->
+    <ul class="nav">
+        <li>
+            <a href="#">HTML/CSS</a>
+        </li>
+
+        <li>
+            <a href="#">Browser Side</a>
+        </li>
+
+        <li>
+            <a href="#">Server Side</a>
+        </li>
+
+        <li>
+            <a href="#">Programming</a>
+        </li>
+
+        <li>
+            <a href="#">XML</a>
+        </li>
+
+        <li>
+            <a href="#">Web Building</a>
+        </li>
+
+        <li>
+            <a href="#">Reference</a>
+        </li>
+    </ul>
+</body>
+</html>

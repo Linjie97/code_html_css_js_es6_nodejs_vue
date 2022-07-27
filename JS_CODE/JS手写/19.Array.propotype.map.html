@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>map</title>
+</head>
+
+<body>
+    <!-- 
+         array.map(function(currentValue, index, arr), thisValue) 
+         类似于forEach的参数
+         不过map的返回值为数组，包含为原始数组中的每个元素调用提供的函数的结果。
+         map不会改变原数组,跟forEach的区别在于需要创建一个新的数组存储结果以及return结果
+    -->
+    <script>
+        // Array.prototype.map2 = function (callback, thisArg) {
+        //     if (this == null) {
+        //         throw new TypeError('this is null or not defined')
+        //     }
+        //     if (typeof callback !== "function") {
+        //         throw new TypeError(callback + ' is not a function')
+        //     }
+        //     const O = Object(this)
+        //     const len = O.length >>> 0
+
+        //     let k = 0, res = []
+        //     while (k < len) {
+        //         if (k in O) {
+
+        //             res[k] = callback.call(thisArg, O[k], k, O);
+        //         }
+        //         k++;
+        //     }
+        //     return res
+        // }
+
+        // 折中版,可以只背下面简单版
+        Array.prototype.map2 = function (callback, thisArg) {
+            if (this == null) {
+                throw new TypeError('this is null or not defined')
+            }
+            if (typeof callback !== "function") {
+                throw new TypeError(callback + ' is not a function')
+            }
+            let res=[];
+            for(let i=0;i<this.length;i++){
+                res.push(callback.call(thisArg,this[i], i, this));
+            }
+            return res
+        }
+        arr = [1, 2, 3, 54, 7]
+        let result = arr.map2((item, index, arr) => {
+           return item+1
+        })
+        console.log(arr,result);
+    </script>
+
+    <script>
+        Array.prototype.myMap = function (callback) {
+            let res = []
+            for (let i = 0; i < this.length; i++) {
+                res.push(callback(this[i], i, this))
+            }
+            return res
+        }
+        arr = [1, 2, 3, 54, 7]
+         result = arr.myMap((item, index, arr) => {
+           return  item * 10
+        })
+        console.log(arr,result);
+    </script>
+</body>
+
+</html>

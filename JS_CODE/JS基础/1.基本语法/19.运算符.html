@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        /*
+           运算符也叫操作符
+              比如：typeof（求一个值的类型，将该值的类型以字符串的形式返回） 
+            
+            算数运算符 
+             当对非Number类型的值进行运算时，会将这些值转换为Number然后在进行运算。
+               任何值和NaN进行运算结果都是NaN
+               +  加  如果对两个字符串进行加法运算，则会拼成一个字符串并返回字符串
+                       任何值和字符串做加法运算都会转换为字符串，再进行拼串。
+                       因此可以借助该特点将任意的数据类型 + 一个""即可转换为String
+                       一种隐式的类型转换，由浏览器完成，实际上也是调用String()函数
+
+               -  减  
+               *  乘
+               /  除
+             任何值做- * / 运算时都会自动转换为Number，可以利用这一特点做隐式的类型转换。
+             可以通过为一个值-0 *1 /1 将其转换为Number，原理和Number()函数一样
+
+               %  取模 （取余）
+        */
+
+        var a = 123;
+        var result = typeof a;
+        console.log(typeof a); //number
+        console.log(typeof result); //string
+
+        result = true + 1;  //2
+        result = false + 1; //1
+        result = true + false; //1
+        result = 2 + null; //2
+        result = 2 + NaN;  //NaN
+        result = "123" + "456";  //String类型的123456
+        result = 123 + "1"; //String 类型的1231
+        result = true + "hello"; //String 类型的truehello
+        console.log(result);
+
+        var c = 123;//number类型的123
+        c = c + ""; //String类型的123
+        console.log("c="+c); //c=123
+
+        result = 1 + 2 + "3";//33 先进行数值的加法，再进行拼串
+        result = "1" + 2 + 3; //123
+
+        result = 100 - 5; //95
+        result = 100 - true; //99
+        result = 100 - "1"; //99 除了加法，其余跟字符串的运算都是转换为number
+
+        result = 2 * 2; //4
+        result = 2 * undefined;//NaN undefined转成number类型为NaN，跟NaN的运算结果为NaN
+
+        result = 9 % 3; //0
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

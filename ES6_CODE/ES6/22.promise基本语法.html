@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>promise基本语法</title>
+</head>
+<body>
+    <script>
+        //实例化 Promise 对象,对象有三个状态：初始化，成功，失败
+        const p =new Promise(function(resolve,reject){
+            setTimeout(function(){
+                // let data = '数据库中的用户数据';
+                // resolve(data);//之后对象的状态就会变成成功
+
+                let err = '数据读取失败';
+                reject(err);
+            },1000);
+        });
+
+        /*
+          通过该方式将异步任务封装在promise对象中，通过resolve和reject函数来
+          改变对象状态，改变状态后通过调用then方法中的回调函数，成功则调用第一
+          个回调函数，失败则调用第二个。
+        */
+
+        //调用 promise 对象的 then 方法
+        p.then(function(value){
+            //执行resolve的话
+            console.log(value);
+        },function(reason){
+            //执行reject的话
+            console.error(reason);
+        })
+    </script>
+</body>
+</html>

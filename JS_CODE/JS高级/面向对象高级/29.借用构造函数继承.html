@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 
+        方式2：借用构造函数继承（假的）
+          1.套路：
+            1）定义父类型构造函数
+            2）定义子类型构造函数
+            3）在子类型构造函数中调用父类型构造函数
+          2.关键：
+             在子类型构造函数中通用call()调用父类型构造函数
+     -->
+     <script>
+         function Person(name,age){
+             this.name = name;
+             this.age = age;
+         }
+
+         function Student(name,age,price){
+             Person.call(this,name,age);//相当于：this.Person(name,age)
+             //call方法可以改变this指向，这里调用person的方法，实际没有继承
+             //也相当于下面两句,调用call类似于student调用Person方法
+            //  this.name = name;
+            //  this.age = age;
+             this.price = price;
+         }
+
+         var s = new Student('Tom',20,140000);
+         console.log(s.name,s.age,s.price);
+     </script>
+</head>
+<body>
+    
+</body>
+</html>

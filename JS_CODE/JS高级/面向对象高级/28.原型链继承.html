@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 
+        方式1：原型链继承
+          1.套路
+            1）定义父类型构造函数
+            2）给父类型的原型添加方法
+            3）定义子类型的构造函数
+            4）创建父类型的实例对象赋值给子类型的原型
+            5）将子类型原型的构造属性设置为子类型
+            6）给子类型原型添加方法
+            7）创建子类型的对象：可以调用父类型的方法
+          2.关键
+             子类型的原型为父类型的一个实例对象，所以子类型的实例对象可以
+             通过隐式原型链去访问父类型的属性。
+     -->
+     <script>
+         //父类型
+         function Supper(){
+             this.supProp = 'Supper property'
+         }
+         Supper.prototype.showSupperProp = function(){
+             console.log(this.supProp);
+         }
+
+         //子类型
+         function Sub(){
+             this.subProp = 'Sub property'
+         }
+
+         //子类型的原型为父类型的一个实例对象
+         Sub.prototype = new Supper()
+         //让子类型的原型的constructor指向子类型
+         Sub.prototype.constructor = Sub;
+         //上下两句语句不可颠倒，先设置子类型的原型属性会销毁掉
+         Sub.prototype.showSubProp = function(){
+             console.log(this.subProp);
+         }
+
+         var sub = new Sub()
+         //子类型对象访问父类型的方法
+         sub.showSupperProp();//Supper property
+         sub.showSubProp();//Sub property
+
+        //  console.log(sub.constructor);//Supper(){}
+         //实例的constructor属性来自实例指向的prototype对象中的constructor
+         //而此处sub的prototype对象指向Supper的实例对象，其中也没有constructor，
+         //需要指向Supper对象的prototype即Object对象，即结果为Supper(){}
+         //修改子类型的原型的constructor后的结果
+         console.log(sub.constructor);//Sub(){}
+     </script>
+</head>
+<body>
+    
+</body>
+</html>

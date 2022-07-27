@@ -1,0 +1,104 @@
+.box1{
+    // 后代元素
+    .box2{
+        color: red;
+    }
+
+    // 子元素
+    >.box3{
+        color: red;
+
+        &:hover{
+            color: blue;
+        }
+    }
+
+    // 为box1设置hover
+    // & 就表示外层的父元素
+    &:hover{
+        color: orange;
+    }
+
+    div &{
+        color: yellow;
+    }
+}
+
+.p1{
+    width: 100px;
+    height: 200px;
+}
+
+// .p2{
+//     width: 100px;
+//     height: 200px;
+//     color: red;
+// }
+
+// :extend() 对当前选择器扩展指定选择器的样式（选择器分组）
+.p2:extend(.p1){
+    color: red;
+}
+
+.p2:extend(.box1>.box3){
+    color: red;
+}
+
+// :extend() 优点在于不用复制一遍，节省代码量
+
+.p3{
+    // 直接对指定的样式进行引用，这里相对于将p1的样式在这里进行了复制
+    // mixin 混合
+    .p1();
+    color: red;
+}
+
+// 使用类选择器时可以在选择器后面添加一个括号，这时实际上就创建了一个mixins
+// 其作用主要是供给其他选择器使用，自己不会编译出来
+.p4(){
+    width: 100px;
+    height: 100px;
+    background-color: #bfa;
+}
+
+.p5{
+    .p4;
+}
+
+// 混合函数  在混合函数中可以直接设置变量
+// 可在此设置参数的默认值，调用函数时，若不输入对应参数则使用默认值
+.test(@w:100px,@h:110px,@bg-color:purple){
+    width: @w;
+    height: @h;
+    border: 1px solid @bg-color;
+}
+
+div{
+    // 形参，接口的概念
+    // 调用混合函数，按顺序传递参数
+    .test(200px,300px,#bfa);
+
+    // 不按顺序，要写@变量名
+    .test(@bg-color:red,@h:100px,@w:300px);
+}
+
+// zeal文档中less-function中有定好的函数可直接使用
+span{
+    color: average(red,yellow);
+    // 红色和黄色的平均色
+}
+
+html{
+    width: 100%;
+    height: 100%;
+}
+body{
+    width: 100%;
+    height: 100%;
+    background-color: #bfa;
+}
+body:hover{
+    // darken颜色加深函数
+    background-color: darken(#bfa,50%);
+}
+

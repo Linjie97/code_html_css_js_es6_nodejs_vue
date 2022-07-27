@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Map</title>
+  </head>
+  <body>
+    <script>
+      //声明 Map
+      let m = new Map();
+
+      //添加元素
+      m.set("name", "尚硅谷");
+      m.set("change", function () {
+        console.log("我们可以改变");
+      });
+      let key = {
+        school: "ATGUIGU",
+      };
+      m.set(key, ["北京", "上海", "深圳"]);
+
+      //size
+      // console.log(m.size);
+
+      //删除
+      // m.delete('name');
+
+      //获取
+      // console.log(m.get('change'));//ƒ (){console.log("我们可以改变");}
+      // console.log(m.get(key));//(3) ['北京', '上海', '深圳']
+
+      //清空
+      // m.clear();
+
+      //遍历,结果每个元素是一个数组，数组第一个元素是键，第二个是值
+      for (let v of m) {
+        console.log(v);
+      }
+      // console.log(m);
+
+      
+
+      //set和get方法，表面是针对同一个键，但实际上这是两个不同的数组实例，
+      //内存地址是不一样的，因此get方法无法读取该键，返回undefined。
+      const map = new Map();
+      map.set(["a"], 555);
+      console.log( map.get(["a"]));//undefined
+    </script>
+  </body>
+</html>

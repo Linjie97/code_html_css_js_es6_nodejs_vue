@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2.姓名案例_methods实现</title>
+    <!-- 引入Vue -->
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+    <!-- 准备好容器 -->
+    <div id="root">
+       姓: <input type="text" v-model="firstName"><br><br>
+       名: <input type="text" v-model="lastName"><br><br>
+       全名: <span>{{fullName()}</span> 
+       <!-- 这里{{fullName()}不是绑定事件的回调，应该理解为方法调用，因此必须带（） -->
+    </div>
+
+    <!-- data中任一个数据发送变化，模板都会重新解析，模板中的插值也会重新调用 -->
+    <script>
+        Vue.config.productionTip = false;//设置为 false 以阻止 vue 在启动时生成生产提示。
+
+        new Vue({
+            el:'#root',
+            data:{
+                firstName:'张',
+                lastName:'三',
+             },
+             methods: {
+                 fullName(){//this就是vue实例
+                    return this.firstName + '-' + this.lastName;
+                 }
+             },
+        });
+    </script>
+</body>
+</html>

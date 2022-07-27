@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        //测试题1
+        function A(){
+
+        }
+        A.prototype.n = 1;
+
+        var b = new A();
+
+        //这里意味着创建新的原型对象，即原来的原型对象地址值弃用，换成现在
+        //定义的这个，但是b在改之前已经实例完成，以其__proto__还是指向原来的
+        //原型对象地址，后面新的实例对象的隐式原型就是下面这个
+        A.prototype = {
+            n:2,
+            m:3
+        };
+
+        var c = new A();
+        console.log(b.n, b.m, c.n, c.m);//1 undefined 2 3
+
+        //测试题2
+        var F = function(){}
+        Object.prototype.a = function(){
+            console.log('a()');
+        };
+        Function.prototype.b = function(){
+            console.log('b()');
+        }
+        var f = new F();
+        console.log(f);//f的__proto__: Object
+        f.a();//a() 实例对象的隐式原型就是函数的显式原型，会指向Object
+        //而Object的隐式原型是null，因此无法指向Function
+        f.b();//Uncaught TypeError: f.b is not a function
+        //F.说明将F看成对象，可以将这个function对象当做Function的实例对象来查找
+        F.a();//a()
+        F.b();//b()
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>迭代器自定义遍历数据</title>
+</head>
+
+<body>
+    <script>
+        //声明一个对象
+        const banji = {
+            name: "终极一班",
+            stus: [
+                'xiaoming',
+                'xiaoning',
+                'xiaotian',
+                'knight'
+            ],
+            //类似于方法重写(自定义)，对象原生不具备iterator接口
+            [Symbol.iterator]() {
+                //索引变量
+                let index = 0;
+                return {
+                    next: () => {
+                        if (index < this.stus.length) {
+                            const result = {
+                                value: this.stus[index], 
+                                done: false,
+                            };
+                            index++;
+                            return result;
+                        }else{
+                            return {value:undefined,done:true};
+                        }
+                    }
+                };
+            }
+        }
+
+        //需求：遍历对象
+        for (let v of banji) {
+            console.log(v);
+            //没有自定义iterator时：Uncaught TypeError: banji is not iterable
+            //重写后即可遍历对象中的数组
+        }
+
+        // banji.stus.forEach(function(item){
+        //     console.log(item);
+        // });
+        //使用forEach是可以的，但是不符合面向对象的思想，不要直接去操作内部属性
+        //因此给对象加接口，用接口去操作属性
+    </script>
+</body>
+
+</html>

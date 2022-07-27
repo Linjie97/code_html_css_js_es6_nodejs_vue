@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        /*
+          for 循环
+          1.初始化表达式let index = 0;
+          2.条件表达式index < array.length;
+          3.更新表达式index++
+          执行流程：①执行初始化表达式，初始化变量；
+                   ②执行条件表达式，判断是否执行循环；
+                      如果为true，则执行循环③
+                      如果为false，终止循环
+                    ④执行更新表达式
+        */
+        // for (let index = 0; index < array.length; index++) {
+        //     const element = array[index];
+        // }
+
+        /*
+           for循环中的三个部分都可以省略，也可以写在外部
+             如果在for循环中不写任何表达式，只写两个分号，此时循环是死循环。
+        */
+    //    for(;;){
+    //        alert("hello");
+    //    }//死循环
+
+       //水仙花数：一个三位数，每个位上的数字的3次幂之和对于它本身
+       //结果：153 370 371 407
+       for (let i = 100; i < 1000; i++) {
+          // var a = i % 100;
+          var a = parseInt(i/100);
+           var b = parseInt((i-a*100)/10);
+           var c = i % 10;
+           if (a*a*a + b*b*b + c*c*c == i) {
+            console.log(i);
+           }
+       }    
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

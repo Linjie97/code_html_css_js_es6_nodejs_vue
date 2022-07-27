@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数组乱序</title>
+</head>
+
+<body>
+    <script>
+        var swapArr = function (arr) {
+            for (let i = 0; i < arr.length; i++) {
+                /*
+                从min到max中随机产生一个数值
+                Math.random()*(max- min) + min
+                从min到max中随机产生一个整数
+                Math.floor( Math.random()*(max- min)) + min
+                */
+                const randomIndex = Math.round(Math.random() * (arr.length - 1 - i)) + i;
+                // 将这个位置上的值和随机选出来的值，进行一个交换
+                [arr[i], arr[randomIndex]] = [arr[randomIndex], arr[i]]
+            }
+            return arr
+        }
+        var arr = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+        console.log(swapArr(arr))
+
+        // 方法二
+        // 个人理解：Math.random()产生的值为[0,1），有一半的概率大于0.5，一半概率小于0.5
+        // 因此两个数进行比较时是升序还是降序（是否交换位置）的概率都是一半一半
+        // 但是会导致可能有一半的数在原位置
+        arr.sort(()=>Math.random()-0.5)
+        console.log(arr);
+    </script>
+</body>
+
+</html>

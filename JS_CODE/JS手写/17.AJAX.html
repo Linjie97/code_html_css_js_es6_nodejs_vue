@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AJAX</title>
+</head>
+
+<body>
+    <script>
+        const getJSON = function (url) {
+            // 通过promise封装
+            return new Promise((resolve, reject) => {
+                // 为了兼容，旧的IE浏览器是ActiveXObject
+                const xhr = XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Mscrosoft.XMLHttp');
+                xhr.open('GET', url, false);
+                xhr.setRequestHeader('Accept', 'application/json');
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState !== 4) return;
+                    if (xhr.status === 200 || xhr.status === 304) {
+                        resolve(xhr.responseText);
+                    } else {
+                        reject(new Error(xhr.responseText));
+                    }
+                }
+                xhr.send();
+            })
+        }
+    </script>
+
+<!-- 之前一个Ajax例子 -->
+    <script>
+        function displayFullName() {
+            // 创建 XMLHttpRequest 对象
+            var request = new XMLHttpRequest();
+            // 实例化请求对象
+            request.open("GET", "test.php?name=C语言中文网&url=http://c.biancheng.net/");
+            // 监听 readyState 的变化
+            request.onreadystatechange = function () {
+                // 检查请求是否成功
+                if (this.readyState === 4 && this.status === 200) {
+                    // 将来自服务器的响应插入当前页面
+                    document.getElementById("result").innerHTML = this.responseText;
+                }
+            };
+            // 将请求发送到服务器
+            request.send();
+        }
+    </script>
+
+</body>
+
+</html>

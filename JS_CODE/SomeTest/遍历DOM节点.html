@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- <script>
+        function eachNode(ele) {
+            var list = []; //用来后面储存获取的元素
+
+            function getHDeles(ele) { //ele是形参,代表要打印哪个dom树
+                var children = ele.children; //获取ele下的子元素
+                for (var i = 0; i < children.length; i++) { //遍历children
+                    var child = children[i] //children每一个子代存起来
+                    list.push(child) //每一个子代存入数组当中
+                    getHDeles(child); //子代也要求子代,继续调用这个函数
+                }
+            }
+            getHDeles(document)
+
+            return list
+        }
+        window.onload = function(){
+           let list = eachNode(document.documentElement);
+           console.log(list);
+        }
+    </script> -->
+</head>
+
+<body>
+    <header>
+        <p></p>
+    </header>
+
+    <nav>
+        <ul>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </nav>
+
+    <div>
+        <aside></aside>
+        <section>
+            <div></div>
+        </section>
+    </div>
+
+    <footer></footer>
+    <!-- <script>
+        function eachNode(ele) {
+            var list = []; //用来后面储存获取的元素
+
+            function getHDeles(ele) { //ele是形参,代表要打印哪个dom树
+                var children = ele.children; //获取ele下的子元素
+                for (var i = 0; i < children.length; i++) { //遍历children
+                    var child = children[i] //children每一个子代存起来
+                    list.push(child) //每一个子代存入数组当中
+                    getHDeles(child); //子代也要求子代,继续调用这个函数
+                }
+            }
+            getHDeles(document)
+
+            return list
+        }
+
+        let list = eachNode(document.documentElement);
+        console.log(list);
+
+        console.log(document.body.children);//类数组，获取元素的子节点，非正规，但好用
+        console.log(document.body.childNodes);// 获取所有的节点，文本节点（3），属性节点（2），元素节点（1）
+    </script> -->
+
+    <!-- 通过 ele.childNodes 进行元素节点的筛选实现 ele.children -->
+    <script>
+        function eachNode(ele) {
+            var list = []; //用来后面储存获取的元素
+            function getHDeles(ele) { //ele是形参,代表要打印哪个dom树
+                var children = ele.childNodes; //获取ele下的子元素
+                for (var i = 0; i < children.length; i++) { //遍历children
+                    if (children[i].nodeType === 1) {//只要元素节点
+                        list.push(children[i]) //每一个子代存入数组当中
+                        getHDeles(children[i]);
+                    }
+                }
+            }
+            getHDeles(ele)
+
+            return list
+        }
+        let list = eachNode(document.documentElement);
+        console.log(list);
+    </script>
+</body>
+
+</html>

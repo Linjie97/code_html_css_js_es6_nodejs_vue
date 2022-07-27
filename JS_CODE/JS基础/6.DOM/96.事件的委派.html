@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        window.onload = function () {
+            //点击按钮添加超链接
+            var btn01 = document.getElementById("btn01");
+            btn01.onclick = function () {
+                //创建一个li
+                var li = document.createElement("li");
+                li.innerHTML = "<a href='javascript:;' class='link'>新建的超链接</a>";
+                //将li添加到ul中
+                var u1 = document.getElementById("u1");
+                u1.appendChild(li);
+            };
+            /*
+              为每一个超链接绑定一个单击响应函数
+              这里我们为每一个超链接都绑定了一个单击响应函数，这种操作过于麻烦
+              而且这些操作只能为已有的超链接设置事件，而新的超链接必须重新绑定
+            */
+            //获取所有的a
+            var allA = document.getElementsByTagName("a");
+            //遍历
+            //    for (let i = 0; i < allA.length; i++) {
+            //        allA[i].onclick = function(){
+            //            alert("我是a的单击响应函数");
+            //        };   
+            //    };
+
+            /*
+               需求：只绑定一次事件，即可应用到多个元素上，即使元素时后添加的
+               可以尝试将其绑定给元素的祖先元素
+ 
+               事件的委派：指将事件统一绑定为元素的共同的祖先元素，这样当
+                 后代元素上的事件触发时，会一直冒泡到祖先元素，从而通过祖
+                 先元素的响应函数来处理事件。
+               事件委派是利用了冒泡，通过委派可以减少事件绑定的次数，提供程序的性能
+                 （个人：冒泡有点像继承的概念，其优点在于你可以自行选择是否冒泡）
+            */
+            //为ul绑定一个单击响应函数
+            u1.onclick = function (event) {
+
+                event = event || window.event;
+                /*
+                  target 返回触发此事件的元素（事件的目标节点）。
+                */
+                //如果触发事件的对象是我们希望的对象才执行
+                if(event.target.className == "link"){
+                    alert("我是ul的单击响应函数");
+                }
+            };
+        }
+    </script>
+</head>
+
+<body>
+    <button id="btn01">添加超链接</button>
+    <ul id="u1">
+        <li><a href="javascript:;" class="link">超链接一</a></li>
+        <li><a href="javascript:;" class="link">超链接二</a></li>
+        <li><a href="javascript:;" class="link">超链接三</a></li>
+    </ul>
+</body>
+
+</html>

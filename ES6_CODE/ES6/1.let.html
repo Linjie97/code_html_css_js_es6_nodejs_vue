@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //声明变量
+        let a;
+        let b,c,d;
+        let e = 100;
+        let f =521,g='djio',h=[];
+
+        //1.变量不能重复声明(var声明的变量就可以，后面覆盖前面)
+        // let num = 12;
+        // let num = 1;
+        //Cannot redeclare block-scoped variable 'num'.
+
+        //2.块级作用域 （js中有全局，函数，eval作用域）
+        //if else while for这些代码块中使用let声明也是块级作用域
+        // {
+        //     let star = yee;
+        // }
+        // console.log(star);//var定义的就可以
+        //Uncaught ReferenceError: yee is not defined
+
+        //3.不存在变量提升
+        // console.log(song);
+        // let song = 'nothing to lose';
+        //Uncaught ReferenceError: Cannot access 'song' before initialization
+
+        //4.不影响作用域链
+        //变量可以顺着作用域链向上找，块级作用域只是外面不能用里面的
+        {
+            let star = '易烊千玺';
+            function fn(){
+                console.log(star);
+            }
+            fn();
+        }
+    </script>
+</body>
+</html>

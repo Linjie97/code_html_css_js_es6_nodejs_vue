@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //ES6 引入新的声明字符串的方式 ``（反引号）  ''  ""
+        //1.声明
+        let str = `我也是字符串`;
+        console.log(str,typeof str);//我也是字符串 string
+
+        //2.内容中可以直接出现换行符，即可以不用转义字符\n
+        let ss = "<ul>\n<li>沈腾</li>\n<li>马丽</li>\n</ul>";
+        console.log(ss);
+        let str2 = 
+        `<ul>
+            <li>沈腾</li>
+            <li>马丽</li>
+        </ul>`;
+        console.log(str2);
+
+        //3.变量拼接（单引号和双引号要用+号去拼接变量）
+        let lovest = "魏翔";
+        // let out = lovest+"的电影";
+        let out = `${lovest}的电影`;
+        console.log(out);
+    </script>
+</body>
+</html>

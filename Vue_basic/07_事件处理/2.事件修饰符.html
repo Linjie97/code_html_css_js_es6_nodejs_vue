@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2.事件修饰符</title>
+    <!-- 引入Vue -->
+    <script type="text/javascript" src="../js/vue.js"></script>
+    <style>
+        *{
+            margin-top: 20px;
+        }
+        .demo1{
+            height: 50px;
+            background-color: skyblue;
+        }
+
+        .box1{
+            padding: 5px;
+            background-color: skyblue;
+        }
+        .box2{
+            padding: 5px;
+            background-color: orange;
+        }
+
+        .list{
+            width: 200px;
+            height: 200px;
+            background-color: peru;
+            overflow: auto;
+        }
+
+        li{
+            height: 100px; 
+        }
+    </style>
+</head>
+<body>
+    <!-- 
+        Vue中的事件修饰符：
+            1.prevent：阻止默认事件（常用）
+            2.stop：阻止事件冒泡（常用）
+            3.once：事件只触发一次（常用）
+            4.capture：使用事件的捕获模式
+            5.self：只有event.target是当前操作的元素时才触发事件
+            6.passive：事件的默认行为立即执行，无需等待事件回调执行完毕
+
+            注：事件修饰符可连着写多个.prevent.stop
+     -->
+    <!-- 准备好容器 -->
+    <div id="root">
+       <h2>欢迎来到{{name}}学习</h2>
+
+       <!-- prevent：阻止默认事件（常用） -->  <!-- @click.prevent有preventDefault()的作用 -->
+       <a href="https://www1.szu.edu.cn/" @click.prevent="showInfo">点击提示信息</a>
+
+       <!-- stop：阻止事件冒泡（常用），加在内层事件上 -->
+       <!-- 事件冒泡：多个组件嵌套，触发内层组件时，会一一触发外层事件 -->
+       <div class="demo1" @click="showInfo">
+           <button @click.stop="showInfo">点我提示信息</button>
+       </div>
+
+       <!-- once：事件只触发一次（常用） -->
+       <button @click.once="showInfo">点我提示信息</button>
+
+       <!-- capture：使用事件的捕获模式 ，加在外层事件上-->
+       <!-- 捕获：由外到内，默认是在冒泡时执行，可以改成在捕获阶段执行 -->
+       <div class="box1" @click.capture="showMsg(1)">
+           div1
+           <div class="box2" @click="showMsg(2)">
+               div2
+           </div>
+       </div>
+
+       <!-- self：只有event.target是当前操作的元素时才触发事件 -->
+       <!-- 此时div加了self，表示event.target不是div时不会触发事件 -->
+       <div class="demo1" @click.self="showInfo">
+        <button @click="showInfo">点我提示信息</button>
+        <!-- 两层都是@click="showInfo" 点击按钮此时event.target指button，
+            然后冒泡时触发外层的事件，target还是button，而不是外层的div -->
+       </div>
+
+
+       <!-- passive：事件的默认行为立即执行，无需等待事件回调执行完毕，移动端用的多 -->
+       <!-- @scroll="demo" scroll可以是键盘上下键，也可以是鼠标滚轮，也可以是拖动滚动条-->
+       <!-- @wheel="demo" wheel是鼠标滚轮的滚动 -->
+       <!-- 区别：scroll在滚动条触底就不再执行，而wheel只要鼠标滚轮滚动就会执行 -->
+       <!-- @wheel="demo"流程：鼠标滚轮滚动一下，触发demo函数，执行完毕，滚动条才能向下滚动一段,
+        @wheel.passive="demo"滚动条滚动，且demo触发执行事件。
+         @scroll="demo" 就不会被影响，可以优先执行默认事件-->
+       <ul @wheel.passive="demo" class="list">
+           <li>1</li>
+           <li>2</li>
+           <li>3</li>
+           <li>4</li>
+       </ul>
+    </div>
+
+    <script>
+        Vue.config.productionTip = false;//设置为 false 以阻止 vue 在启动时生成生产提示。
+
+        new Vue({
+            el:'#root',
+            data:{ 
+                name:'SZU',
+            },
+            methods: {
+                showInfo(e){
+                    // e.preventDefault();//阻止默认行为，即不让a标签跳转
+                    // e.stopPropagation();//阻止冒泡
+                    // e.cancelBubble = true;//阻止冒泡
+                    alert('hello');
+                    // console.log(e.target);
+                },
+                showMsg(msg){
+                    console.log(msg);
+                },
+                demo(){
+                    // console.log('@');
+                    for (let i = 0; i < 1000; i++) {
+                        console.log('#');   
+                    };
+                    console.log('终于结束');
+                }
+            },
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 
+        1.将函数（fn2）作为另一个函数（fn1）的返回值
+        2.将函数作为实参传递给另一个函数调用
+     -->
+     <script>
+         //1.将函数（fn2）作为另一个函数（fn1）的返回值
+         function fn1(){
+             var a = 2;
+             function fn2(){
+                 a++;
+                 console.log(a);
+             };
+             return fn2;
+         };
+         var f = fn1();//f相当于fn2
+    //表明a没有消失，在累加（a在fn1作用域，本来是调用结束就消失，但有闭包存在）
+         f();//3
+         f();//4
+    //上面创建内部函数对象一次，产生一个闭包，可以再执行fn1就会产生新的闭包
+         fn1();
+
+         //2.将函数作为实参传递给另一个函数调用
+         function showDelay(msg,time){
+             setTimeout(function(){
+                 alert(msg)
+             },time);
+         };
+         showDelay('hdasin',2000);
+     </script>
+</head>
+<body>
+    
+</body>
+</html>

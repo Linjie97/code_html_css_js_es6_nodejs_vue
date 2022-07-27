@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>函数柯里化</title>
+</head>
+
+<body>
+    <script>
+        /*
+          函数柯里化，又称部分求值，是把接收多个参数的函数变换成接收一个单一参数的函数，并且返回
+          接收余下的参数并且返回结果的新函数的技术。
+          通用的柯里化函数：可以自动地将一个函数转换成多次传递参数，类似lodash
+          本质是降低通用性，提高适用性，其实是对闭包的极致应用。用闭包把参数保存起来，
+          当参数的数量足够执行函数了，就开始执行函数。基本方法就是使用一个闭包返回一个函数。
+        */
+        function curry(fn) {
+            let judge = (...args) => {
+                // ...args获取每一次传进来的实参
+                // fn指的是传入的函数，fn.length打印出来就是fn的参数长度
+                if (args.length == fn.length) return fn(...args)//当参数长度一致，执行fn
+                return (...arg) => judge(...args, ...arg)//当参数长度不一致，循环judge
+                // 可以这样理解：...args是前面收集的实参，...arg是当前循环传进来的一个实参，需要拼在一起
+            }
+            return judge
+        }
+
+        function add(a, b, c) {
+            return a + b + c
+        }
+        let res = add(1, 2, 3)
+        let addCurry = curry(add)
+        let res2 = addCurry(1)(2)(3)
+        console.log(res, res2);
+
+        let addCurry2 = curry2(add)
+        let result = addCurry2(1)(2)(3)
+        console.log(res,result);
+    </script>
+</body>
+
+</html>

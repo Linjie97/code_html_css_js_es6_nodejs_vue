@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Array.propotype.forEach</title>
+</head>
+
+<body>
+    <!-- 
+        array.forEach(function(currentValue, index, arr), thisValue)
+        function为回调函数，调用数组中每个元素，currentValue当前元素的值（必需），
+        index数组索引（可选），arr当前元素所属的数组对象（可选）
+        thisValue(可选)要传递给函数以用作其 "this" 值的值。
+           如果此参数为空，则值 "undefined" 将作为其 "this" 值传递
+
+        返回值undefined！！
+     -->
+    <script>
+        // Array.prototype.forEach2 = function (callback, thisArg) {
+        //     if (this == null) {
+        //         throw new TypeError('this is null or not defined')
+        //     }
+        //     if (typeof callback !== "function") {
+        //         throw new TypeError(callback + ' is not a function')
+        //     }
+        //     const O = Object(this)  // this 就是当前的数组
+        //     const len = O.length >>> 0
+        //     // O.length >>> 0 是什么操作？就是无符号右移 0 位，
+        //     // 那有什么意义嘛？就是为了保证转换后的值为正整数。其实底层做了 2 层转换，
+        //     // 第一是非 number 转成 number 类型，第二是将 number 转成 Uint32 类型
+        //     let k = 0
+        //     while (k < len) {
+        //         if (k in O) {
+        //             callback.call(thisArg, O[k], k, O);
+        //         }
+        //         k++;
+        //     }
+        // }
+
+        // 折中版,可以只背下面简单版
+        Array.prototype.forEach2 = function (callback, thisArg) {
+            if (this == null) {
+                throw new TypeError('this is null or not defined')
+            }
+            if (typeof callback !== "function") {
+                throw new TypeError(callback + ' is not a function')
+            }
+            for(let i=0;i<this.length;i++){
+                callback.call(thisArg,this[i], i, this);
+            }
+        }
+        arr = [1, 2, 3, 54, 7]
+        arr.forEach2((item, index, arr) => {
+            arr[index] = item * 10
+        })
+        console.log(arr);
+    </script>
+
+    <script>
+        Array.prototype.myForEach = function (callback) {
+            for (let i = 0; i < this.length; i++) {
+                callback(this[i], i, this)
+            }
+        }
+
+        arr = [1, 2, 3, 54, 7]
+        arr.forEach((item, index, arr) => {
+            arr[index] = item * 10;
+        })
+        arr.myForEach((item, index, arr) => {
+            arr[index] = item * 10
+        })
+        console.log(arr);
+    </script>
+</body>
+
+</html>

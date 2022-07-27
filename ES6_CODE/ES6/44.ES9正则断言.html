@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>正则扩展-反向断言</title>
+  </head>
+  <body>
+    <script>
+      //声明一个字符串,提取后半段的数字，且有可能是动态的
+      let str = "JS4729180你知道3829第一呀";
+      //  //正向断言
+      // const reg = /\d+(?=第)/;
+      // let result = reg.exec(str);
+      // console.log(result);//结果是一个数组
+
+   //小于号表示前面 等号表示满足 感叹号表示不是，不满足
+
+      //反向断言  根据前面内容做判断
+      const reg = /(?<=道)\d+/;
+      let result = reg.exec(str);
+      console.log(result); //结果是一个数组
+    </script>
+  </body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>图片懒加载</title>
+</head>
+<body>
+    <script>
+        // 相比于普通的图片懒加载，加了2个处理
+        // 1.图片全部加载完毕后移除事件监听；
+        // 2.加载完的图片，从imgList移除
+        let imgList = [...document.querySelectorAll('img')];//获取所有图片
+        let length = imgList.length;
+
+        const imgLazyLoad = function(){
+            let count = 0;
+            return (function(){
+                let deleteIndexList = [];
+                imgList.forEach((img,index)=>{
+                    // getBoundingClientRect获取元素位置，没有参数
+                    // 获取的是页面中某个元素的左，上，右和下分别相对浏览器视窗的位置
+                    // 该函数返回一个Object对象，该对象有6个属性：top,lef,right,bottom,width,height
+                    // 兼容性还行，ie8及以上可以
+                    let rect = img.getBoundingClientRect();
+                    // 图片离视口顶部的距离小于文档显示区（视口）高度，表示应该渲染展示该图片了
+                    if(rect.top<window.innerHeight){
+                    // 一开始src置空，具体地址放在img.dataset中，不过我看一般用的是自定义属性data-src
+                        img.src = img.dataset.src;
+                        deleteIndexList.push(index);
+                        count++;
+                        if(count === length){//所有图片都渲染了，这是闭包
+                            document.removeEventListener('scroll',imgLazyLoad);
+                        }
+                    }
+                })
+                // 销毁存进去的元素
+                imgList = imgList.filter((img,index)=>!deleteIndexList.includes(index))
+            })()
+        }
+        // 这里最好加防抖处理
+
+        // 每一次滚动都要指向该回调
+        document.addEventListener('scroll',imgLazyLoad)
+    </script>
+    <img src="" dataset="{'src':'具体地址'}">
+</body>
+</html>

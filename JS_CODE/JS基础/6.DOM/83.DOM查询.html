@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        /*
+          定义一个函数，专门来为指定元素绑定单击响应函数
+          参数： 
+               idStr  要绑定单击响应函数的对象的id属性值
+               fun  事件的回调函数，当单击元素时，该函数将会被触发
+        */
+       function myClick(idStr,fun){
+           //为id=idStr的按钮绑定一个单击响应函数
+           var btn = document.getElementById(idStr);
+           btn.onclick = fun;
+       }
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

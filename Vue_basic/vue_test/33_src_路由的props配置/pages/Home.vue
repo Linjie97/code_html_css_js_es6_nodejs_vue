@@ -1,0 +1,24 @@
+<template>
+  <div>
+    <h2>Home</h2>
+    <div>
+      <ul class="nav nav-tabs">
+        <li>
+          <router-link class="list-group-item" active-class="active" to="/home/news">News</router-link>
+          <router-link class="list-group-item" active-class="active" to="/home/message">Message</router-link>
+        </li>
+      </ul>
+
+      <div>
+        <router-view></router-view>
+        <hr />
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "Home",
+};
+</script>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>模板语法</title>
+    <!-- 引入Vue -->
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+    <!-- 
+        Vue模板语法有2大类:
+          1.插值语法：
+                功能：用于解析标签体内容。
+                写法：{{xxx}}，xxx是js表达式，且可以直接读取到data中的所有属性
+          2.指令写法：
+                功能：用于解析标签（包括：标签属性、标签体内容、绑定事件。。。）。
+                举例：v-bind：href="xxx" 或 简写为 ：href="xxx"，xxx同样要写js表达式
+                      且可以直接读取到data中的所有属性
+                备注：Vue中有很多指令，且形式都是v-？？？？,例如v-bind
+                简单理解：插值语法必须返回表达式，指令语法执行语句。
+     -->
+    <!-- 准备好容器 -->
+    <div id="root">
+        <h1>插值语法</h1>
+        <h3>hello,{{name}}</h3>
+        <hr>
+        <h1>指令语法</h1>
+        <!-- v-bind可以绑定动态变化的属性 --> <!-- 为避免重名冲突，可以加多层级 -->
+        <a v-bind:href="school.url.toUpperCase()" v-bind:x="hello">点击{{school.name}}跳转1</a>
+        <!-- v-bind：可以简写为： -->
+        <a :href="school.url" :x="hello">点击链接跳转2</a>
+    </div>
+
+    <script>
+        Vue.config.productionTip = false;//设置为 false 以阻止 vue 在启动时生成生产提示。
+
+        new Vue({
+            el:'#root',
+            data:{
+                name:'world',
+                hello:'你好',
+                school:{
+                    url:'http://www.atguigu.com',
+                    name:'另一层的name'
+                }
+            }
+        })
+    </script>
+</body>
+</html>

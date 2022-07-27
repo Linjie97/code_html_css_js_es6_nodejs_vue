@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>5.姓名案例_watch实现</title>
+    <!-- 引入Vue -->
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+
+<body>
+    <!-- 
+        computed和watch之间的区别：
+          1.computed能完成的功能，watch都可以完成
+          2.watch能完成的功能，computed不一定能完成，例如：watch可以进行异步操作
+        两个重要的小原则：
+          1.所被Vue管理的函数，最好写出普通函数，这样this的指向才是vm 或 组件实例对象
+          2.所有不被Vue所管理的函数（定时器的回调函数、Ajax的回调函数，promise的回调函数等），
+             最好写成箭头函数，这样this的指向才是vm或组件实例对象。
+     -->
+    <!-- 准备好容器 -->
+    <div id="root">
+        姓: <input type="text" v-model="firstName"><br><br>
+        名: <input type="text" v-model="lastName"><br><br>
+        全名: <span>{{fullName}}</span>
+    </div>
+
+    <script>
+        Vue.config.productionTip = false;//设置为 false 以阻止 vue 在启动时生成生产提示。
+
+        const vm = new Vue({
+            el: '#root',
+            data: {
+                firstName: '张',
+                lastName: '三',
+                fullName:'张-三'
+            },
+            watch:{
+                firstName(newValue){
+                    /*
+                    这里必须要写成箭头函数，这里的异步任务并不是vm管理的函数，写成普通函数的话
+                    其this是window，当写成箭头函数的话，this可以转化为setTimeout外部环境的
+                    this，即firstName中的this，这是简写，应该是firstName对象中的handler函数，
+                    此时this是vm
+                    */
+                    setTimeout(()=>{
+                        console.log(this);
+                        this.fullName = newValue + '-' + this.lastName;
+                    },1000);
+                 },
+                 lastName(newValue){
+                     this.fullName = this.firstName + '-' + newValue;
+                 },
+            }
+        });
+
+         //使用watch实现的代码时命令式（踢一步走一步）且重复的 
+         //当需要开启异步任务时，watch可以实现，但是computed属性不能实现
+         //（computed是需要return一个返回值的，异步任务不一定可以有）
+    </script>
+</body>
+
+</html>

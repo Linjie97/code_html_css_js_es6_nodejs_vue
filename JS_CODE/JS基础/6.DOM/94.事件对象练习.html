@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #box1 {
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            position: absolute;
+        }
+    </style>
+    <script>
+        window.onload = function () {
+            /*
+              使div可以跟随鼠标移动
+            */
+            //获取box1
+            var box1 = document.getElementById("box1");
+            //绑定鼠标移动事件
+            document.onmousemove = function (event) {
+                //解决兼容问题
+                event = event || window.event;
+                //获取鼠标坐标
+                /*
+                  clientX和clientY
+                  获取鼠标在当前可见窗口的坐标，坐标原点在窗口左上角
+                  div（开启绝对定位）的偏移量，是相对于整个页面
+                  当出现页面比可见窗口大（有滚动条的情况），两者坐标原点不一样
+ 
+                  pageX和pageY可以获取鼠标相对于当前页面的坐标，IE8不兼容
+                */
+                //    var left = event.pageX;
+                //    var top = event.pageY;
+                //    //设置div的偏移量
+                //    box1.style.left = left +"px";
+                //    box1.style.top = top +"px";
+
+                //为兼容IE8
+                //获取滚动条滚动的距离
+                /*
+                  chrome认为浏览器的滚动条是body，可以通过body.scrollTop获取
+                  火狐等浏览器认为浏览器的滚动条是html的
+ 
+                */
+                //    var st = document.body.scrollTop;//chrome
+                //    var st = document.documentElement.scrollTop;//火狐等其他
+                //获取滚动条滚动距离的兼容问题
+                var st = document.body.scrollTop || document.documentElement.scrollTop;
+                var sl = document.body.scrollLeft || document.documentElement.scrollLeft;
+                var left = event.clientX;
+                var top = event.clientY;
+                box1.style.left = left + sl + "px";
+                box1.style.top = top + st + "px";
+            }
+        };
+    </script>
+</head>
+
+<body style="height: 1000px;">
+    <div id="box1"></div>
+</body>
+
+</html>

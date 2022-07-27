@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* clip-path，它是最精简和最可具扩展性的。 不过目前其在浏览器兼容性不是很好，使用时要考虑浏览器是否支持。 */
+        .triangle {
+            margin: 100px;
+            width: 160px;
+            height: 200px;
+            background-color: skyblue;
+            clip-path: polygon(0 0, 0% 100%, 100% 50%);
+            /* 绘制边界，上面定义了三角形三个点坐标 */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="triangle"></div>
+</body>
+
+</html>

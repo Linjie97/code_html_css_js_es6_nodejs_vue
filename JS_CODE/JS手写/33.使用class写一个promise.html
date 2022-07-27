@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>使用class写一个promise</title>
+</head>
+
+<body>
+    <script>
+
+        //创建一个Promise的类
+
+        class myPromise {
+
+            constructor(executer) {//构造函数constructor里面是个执行器
+                this.status = 'pending';//默认的状态 pending
+                this.value = undefined//成功的值默认undefined
+                this.reason = undefined//失败的值默认undefined
+
+                //状态只有在pending时候才能改变
+                let resolve = value => {
+                    //判断只有等待时才能resolve成功
+                    if (this.status == 'pending') {
+                        this.status = 'resolve';
+                        this.value = value;
+                    }
+
+                }
+
+                //判断只有等待时才能reject失败
+                let reject = reason => {
+                    if (this.status == 'pending') {
+                        this.status = 'reject';
+                        this.reason = reason;
+                    }
+
+                }
+
+                try {
+                    //把resolve和reject两个函数传给执行器executer
+                    // executer(resolve, reject);
+                    // 我觉得应该是上面定义的两个函数
+                    executer(resolve, reject);
+                } catch (e) {
+                    reject(e);//失败的话进catch
+                }
+            }
+
+            then(onFufilled, onReject) {
+                //如果状态成功调用onFufilled
+                if (this.status = 'resolve') {
+                    onFufilled(this.value);
+                }
+
+                //如果状态失败调用onReject
+                if (this.status = 'reject') {
+                    onReject(this.reason);
+                }
+
+            }
+
+        } 
+
+        let pro = new myPromise((resolve,reject)=>{});
+        console.log(pro);//pending
+        let pro2 = new myPromise((resolve,reject)=>{resolve(1)})
+        console.log(pro2);//resolve
+        let pro3 = new myPromise((resolve,reject)=>{reject(1)})
+        console.log(pro3);//reject
+    </script>
+</body>
+
+</html>

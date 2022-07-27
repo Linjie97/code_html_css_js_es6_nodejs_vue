@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        //测试题1
+        //还是作用域的划分问题，show(fn)中调用fn()，而fn()的作用域中没有x，
+        //要往外window找,这不是作用域链（上下级）的问题。
+        //简而言之，作用域在函数定义时就已经确定好了，不改变
+        var x = 10;
+        function fn(){
+            console.log(x);
+        }
+        function show(f){
+            var x = 20;
+            f();
+        }
+        show(fn);//10
+
+        //测试题2
+        var fn = function(){
+            console.log(fn);
+        }
+        fn()
+        //ƒ (){console.log(fn);}
+
+        var obj = {
+            fn2:function(){
+                console.log(this);//{fn2: ƒ}
+                console.log(this.fn2);//若改成this.fn2即可输出fn2(){}
+                console.log(fn2);//Uncaught ReferenceError: fn2 is not defined at Object.fn2
+                //函数作用域中没有fn2，因此向上级作用域window找，也没有就会报错
+                //简而言之，作用域链没有fn2这个变量
+            }
+        }
+        obj.fn2()
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

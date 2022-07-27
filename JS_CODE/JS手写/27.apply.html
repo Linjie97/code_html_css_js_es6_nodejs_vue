@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>apply</title>
+</head>
+
+<body>
+    <script>
+        Function.prototype.apply2 = function (context, arr) {
+            var context = context || window;
+            context.fn = this;
+
+            var result;
+            if (!arr) {
+                result = context.fn();
+            } else {
+                var args = [];
+                for (var i = 0, len = arr.length; i < len; i++) {
+                    args.push('arr[' + i + ']');
+                }
+                result = eval('context.fn(' + args + ')')
+            }
+
+            delete context.fn
+            return result;
+        }
+
+        /*
+        实现的过程也和call基本一致。只是在执行函数时，要判断一下，使用者有没有传入第二个参数，
+        如果有的话，执行时传入...arguments[1]就可以。如果没有传入，在执行时就不传入任何东西。
+        */ 
+        Function.prototype.myApply = function (ctx) {
+            ctx = ctx || window;
+            let fn = Symbol();
+            ctx[fn] = this;
+            let result;
+            if (arguments[1]) {
+                result = ctx[fn](...arguments[1]);
+            } else {
+                result = ctx[fn]();
+            }
+            delete ctx[fn];
+            return result;
+        };
+
+
+        // 测试
+        var name = "window"
+        let age = 25;
+        let sex = "女"
+        function fn(age, sex) {
+            console.log(this.name, age, sex);
+        }
+
+        let obj = {
+            name: "微信公众号: Code程序人生",
+        };
+        fn(age, sex);
+        fn.apply(obj, [24, '男']);
+        fn.myApply(obj, [24, '男']);
+
+    </script>
+</body>
+
+</html>

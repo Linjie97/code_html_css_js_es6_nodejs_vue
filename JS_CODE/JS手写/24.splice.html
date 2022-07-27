@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>splice</title>
+</head>
+
+<body>
+    <script>
+        Array.prototype.sx_splice = function (start, length, ...values) {
+            if (length === 0) return []//截取长度为0，直接返回空字符串
+            // 需要考虑截取的长度是否超出范围
+            length = start + length > this.length - 1 ? this.length - start : length
+            // console.log(length)
+            const res = [], tempArr = [...this]
+            for (let i = start; i < start + values.length; i++) {
+                this[i] = values[i - start]
+            }
+            this.length = start + values.length
+            // 截取后的数组长度小于原数组
+            if (values.length < length) {
+                const cha = length - values.length
+                // console.log(cha)
+                for (let i = start + values.length; i < tempArr.length; i++) {
+                    this[i] = tempArr[i + cha]
+                }
+                this.length = this.length - cha
+            }
+            // 截取后的数组长度大于原数组
+            if (values.length > length) {
+                for (let i = start + length; i < tempArr.length; i++) {
+                    this.push(tempArr[i])
+                }
+            }
+            for (let i = start; i < start + length; i++) {
+                res.push(tempArr[i])
+            }
+            return res
+        }
+
+        arr = [1,4,6,8,3,76,36,7]
+        let res = arr.sx_splice(3,4,100,5000)
+        console.log(arr,res);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3.列表过滤</title>
+    <!-- 引入Vue -->
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+    <!-- 准备好容器 -->
+    <div id="root">
+       <h2>人员列表(遍历数组)</h2>
+       <input type="text" placeholder="请输入名字" v-model="keyWord">
+       <ul>
+           <li v-for="(p,index) of filPersons" :key="index">
+               {{p.name}}--{{p.age}}--{{p.sex}}
+           </li>
+       </ul>
+    </div>
+
+    <script>
+        Vue.config.productionTip = false;//设置为 false 以阻止 vue 在启动时生成生产提示。
+        //用watch实现
+        //#region 折叠区域
+        // new Vue({
+        //     el:'#root',
+        //     data:{
+        //         keyWord:'',
+        //         persons:[
+        //             {id:'001',name:'马冬梅',age:18,sex:'女'},
+        //             {id:'002',name:'周冬雨',age:19,sex:'女'},
+        //             {id:'003',name:'周杰伦',age:20,sex:'男'},
+        //             {id:'003',name:'周杰伦',age:20,sex:'男'},
+        //         ],
+        //         filPersons:[],
+        //      },
+        //      watch:{
+        //          //小技巧：用''去过滤字符串的值为0不是-1，因此初始化一次所有persons的选项都可以显示出来
+        //         keyWord:{
+        //             immediate:true,
+        //             handler(val){
+        //              this.filPersons = this.persons.filter((p)=>{
+        //                  return p.name.indexOf(val) !== -1; 
+        //              })
+        //          },
+        //         },
+        //      },
+        // });
+        //#endregion
+       
+        //用computed实现
+        new Vue({
+            el:'#root',
+            data:{
+                keyWord:'',
+                persons:[
+                    {id:'001',name:'马冬梅',age:18,sex:'女'},
+                    {id:'002',name:'周冬雨',age:19,sex:'女'},
+                    {id:'003',name:'周杰伦',age:20,sex:'男'},
+                    {id:'003',name:'温兆伦 ',age:20,sex:'男'},
+                ],
+             },
+             computed: {
+                 filPersons(){
+                   return this.persons.filter((p)=>{//filter中的this是Window，需要用箭头函数
+                         return p.name.indexOf(this.keyWord) !== -1; 
+                     })
+                 }
+             },
+        });
+    </script>
+</body>
+</html>

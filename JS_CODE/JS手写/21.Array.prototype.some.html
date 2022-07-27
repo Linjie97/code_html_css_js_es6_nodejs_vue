@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Array.prototype.some</title>
+</head>
+
+<body>
+    <!-- 
+        array.some(function(currentValue, index, arr), thisValue)
+        如果找到函数返回真值的数组元素，some() 返回真（并且不检查剩余值）
+        不会改变原数组
+        返回值是布尔值。如果数组中的任何元素通过测试，则返回 true，否则返回 false。
+     -->
+    <script>
+        Array.prototype.some2 = function (callback, thisArg) {
+            if (this == null) {
+                throw new TypeError('this is null or not defined')
+            }
+            if (typeof callback !== "function") {
+                throw new TypeError(callback + ' is not a function')
+            }
+            let res = []
+            for (let i = 0; i < this.length; i++) {
+                if(callback.call(thisArg, this[i], i, this)) return true
+            }
+            return false
+        }
+        // 测试
+        arr = [1, 2, 3, 54, 7]
+        result = arr.some2((item, index, arr) => {
+            return item > 4
+        })
+        console.log(arr, result);
+    </script>
+
+    <script>
+        Array.prototype.mySome = function (callback) {
+            for (let i = 0; i < this.length; i++) {
+                if (callback(this[i], i, this)) return true
+            }
+            return false
+        }
+        // 测试
+        arr = [1, 2, 3, 54, 7]
+        result = arr.mySome((item, index, arr) => {
+            return item > 4
+        })
+        console.log(arr, result);
+    </script>
+</body>
+
+</html>

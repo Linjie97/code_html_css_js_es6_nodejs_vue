@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        /*
+           定义一个用来求两个数和的函数
+        */
+       //形参，声明形参就相当于在函数内部声明了对应的变量
+       function sum(a,b) {
+           console.log(a+b);
+       }
+       //实参
+       sum(2,5);
+
+        //调用函数时解析器不会检查实参的类型，要注意是否有可能接收到非法参数
+        //函数的实参可以是任意的数据类型
+       sum(true,false);//1
+
+        //调用函数时，解析器也不会检查实参的数量，多余实参不会被赋值
+        sum(123,344,"hello",true);
+        //如果实参的数量少于形参的数量，则没有对应实参的形参将是undefined
+        sum(123);
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

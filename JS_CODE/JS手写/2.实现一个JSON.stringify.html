@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2.实现一个JSON.stringify</title>
+</head>
+
+<body>
+    <script>
+        /*
+         JSON.stringify()
+            作用：将 JavaScript 对象转换为 JSON 字符串。
+            使用场景：
+                判断数组是否包含某对象，或者判断对象是否相等。
+                让 localStorage / sessionStorage 可以存储对象。
+                实现对象深拷贝。
+            参数：默认该方法其实有三个参数：第一个参数是必选，后面两个是可选参数非必选。
+            第一个参数传入的是要转换的对象；第二个是一个 replacer 函数，比如指定的 replacer 
+            是数组，则可选择性地仅处理包含数组指定的属性；第三个参数用来控制结果字符串里面的间距，
+            后面两个参数整体用得比较少。
+
+        JSON.stringify(value[, replacer [, space]])：
+            1.Boolean | Number | String 类型会自动转换成对应的原始值。
+            2.undefined、任意函数以及 symbol，会被忽略（出现在非数组对象的属性值中时），
+            或者被转换成 null（出现在数组中时）。
+            3.不可枚举的属性会被忽略。
+            4.如果一个对象的属性值通过某种间接的方式指回该对象本身，即循环引用，属性也会被忽略。
+        */
+
+        function jsonStringify(obj) {
+            let type = typeof obj;
+            if (type !== "object") {
+                if (/string|undefined|function/.test(type)) {
+                    obj = '"' + obj + '"';//差点看不懂就是变成"obj"
+                }
+                return String(obj);
+            } else {
+                let json = []
+                let arr = Array.isArray(obj)
+                for (let k in obj) {
+                    let v = obj[k];
+                    let type = typeof v;
+                    if (/string|undefined|function/.test(type)) {
+                        v = '"' + v + '"';
+                    } else if (type === "object") {
+                        v = jsonStringify(v);
+                    }
+                    // 如果是数组则key为空
+                    json.push((arr ? "" : '"' + k + '":') + String(v));
+                }
+                // 前后加不加"都无所谓
+                return '"'+(arr ? "[" : "{") + String(json) + (arr ? "]" : "}")+'"'
+            }
+        }
+        console.log(typeof jsonStringify({ x: 5 })); // "{"x":5}"
+        console.log(jsonStringify([1, "false", false])); // "[1,"false",false]"
+        console.log(jsonStringify({ b: undefined })); // "{"b":"undefined"}"
+
+    </script>
+</body>
+
+</html>

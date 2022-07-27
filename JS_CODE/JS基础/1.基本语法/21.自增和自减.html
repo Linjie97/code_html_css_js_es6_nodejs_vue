@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        /*
+           自增 ++：
+              -变量在自身的基础上加1,变量自增后，原变量的值也会立即加一
+              -分成两种：后++（a++）和前++（++a）
+                 无论是a++还是++a，都会是原变量的值立即自增1
+                 不同的是a++ 和 ++a 的值不同
+                 a++（表达式）的值等于原变量的值（自增前的值）（其实就是先执行再加一）
+                 ++a（表达式）的值等于原变量的新值（自增后的值）（先加一再执行）
+        */
+       var a = 1;
+    //    a++; //a=2
+    //    ++a; //a=2
+    //    console.log(a++); //1
+    //    console.log("a="+a); //2
+
+       console.log(++a); //2
+       console.log("a="+a); //2
+
+       var d = 20;
+       var result = d++ + ++d + d;
+       //20 + 22 + 22 =64
+
+       d = d++; //20
+       /*
+          var e = d++;
+          d = e;
+       */
+
+       /*
+          自减--：
+                自减分成两种：后--（a--）和前--（--a）
+                无论是a--还是--a都会使原变量的值立即自减1
+                  不同的是a--和--a的值不同
+                  a--（表达式）的值等于原变量的值（自减前的值）（其实就是先执行再减一）
+                  --a（表达式）的值等于原变量的新值（自减后的值）（先减一再执行）
+       */
+      var num = 10;
+    //   num--; //num=9
+    //   --num;//num=9
+    //   console.log(num--);//10
+    //   console.log(--num);//9
+
+    </script>
+
+</head>
+<body>
+    
+</body>
+</html>

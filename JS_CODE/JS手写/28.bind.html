@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>bind</title>
+</head>
+
+<body>
+    <!-- 
+        bind与call相比，在传入参数的方式上是一致的，bind也是将需要传入的函数参数
+        从第二个参数开始依次传入。但是bind与call和apply不同的点是，它在执行后，
+        会返回一个修改this指向之后的函数，要手动去执行，而call和apply是自动执行。
+     -->
+    <script>
+        Function.prototype.myBind = function (ctx) {
+            ctx = ctx || window;
+            let self = this;
+            let args = [...arguments].splice(1);
+            let fn = function () { };
+            let _fn = function () {
+                // 所以在函数中改变this指向的操作就没必要重复写了，这里使用现有的apply来实现。
+                /*
+                 _fn函数中判断this instanceof _fn的目的是，原生bind其实是可以new那个bind后
+                 返回的函数的(即当作构造函数用)，不是new的情况下this指向才会是ctx。
+                 与call和apply不一样的地方是，这里还需要设置一下返回的那个函数的原型，
+                 采用继承的方式，不能直接 = ，要采用一个中介函数fn来辅助改变_fn的原型。
+                */
+                return self.apply(this instanceof _fn ? this : ctx, args);
+            }
+            fn.prototype = this.prototype;
+            // 原型链继承的概念，这里是让_fn继承fn
+            _fn.prototype = new fn();
+            return _fn;
+        }
+
+        // // 如果不考虑构造函数的点，其实就跟call差不多
+        // Function.prototype.myBind = function (ctx){
+        //     ctx = ctx || window;
+        //     let fn = Symbol();
+        //     ctx[fn] = this;
+        //     let args = [...arguments].splice(1);
+        //     let result = function(){
+        //         return ctx[fn](...args);
+        //     }
+        //     return result
+        // }
+
+        var name = "window"
+        function fn(age, sex) {
+            console.log(this.name, age, sex);
+        }
+        let obj = {
+            name: "微信公众号: Code程序人生",
+        };
+
+        // fn.call(obj, 22, '男');
+        // fn.apply(obj, [24, '男']);
+        console.log(fn.bind(obj, 26, '男'));//ƒ fn(age, sex) {console.log(this.name, age, sex);}
+        fn.bind(obj, 26, '男')();
+        fn.myBind(obj, 26, '男')();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3.实现一个JSON.parse</title>
+</head>
+
+<body>
+    <script>
+        /*
+        JSON.parse(text[, reviver])
+          用来解析 JSON 字符串，构造由字符串描述的 JavaScript 值或对象。
+          提供可选的 reviver 函数用以在返回之前对所得到的对象执行变换(操作)。
+        */
+
+        //    第一种：直接调用eval
+        // function jsonParse(opt) {
+        //     // 在eval中{}需要加一个（）否则会被认为是代码段
+        //     return eval('(' + opt + ')');
+        // }
+        // jsonParse(jsonStringify({ x: 5 })) // Object { x: 5}
+        // jsonParse(jsonStringify([1, "false", false])) // [1, "false", false]
+        // jsonParse(jsonStringify({ b: undefined })) // Object { b: "undefined"}
+        /*
+          注：避免在不必要的情况下使用 eval，eval() 是一个危险的函数， 它执行的代码拥有着
+          执行者的权利。如果你用 eval() 运行的字符串代码被恶意方（不怀好意的人）操控修改，
+          他可能会在你写的的网页/扩展程序的权限下，在用户计算机上运行恶意代码。
+        */
+
+        // 第二种：Function
+        // 核心：Function 与 eval 有相同的字符串参数特性。
+        var jsonStr = '{ "age": 20, "name": "jack" }'
+        var json = (new Function('return ' + jsonStr))();//构建一个匿名函数并执行
+        console.log(json);
+    </script>
+</body>
+
+</html>

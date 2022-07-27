@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+        // ES5 获取实参的方式
+        function date(){
+            console.log(arguments);
+        }
+        date('易烊千玺','Yee','千纸鹤','Jackson');
+        //结果是类数组对象 Arguments(4) 
+
+        // ES6 引入 rest 参数，用于获取函数的实参，用来代替arguments
+        function date2(...args){
+            console.log(args);
+        }
+        date2('易烊千玺','Yee','千纸鹤','Jackson');
+        //结果是数组，可以使用数组方法进行操作
+
+        //rest参数必须要放到最后
+        function fn(a,b,...args){
+            console.log(a);
+            console.log(b);
+            console.log(args);
+        }
+        fn(1,2,3,4,5,6)
+    </script>
+</body>
+</html>

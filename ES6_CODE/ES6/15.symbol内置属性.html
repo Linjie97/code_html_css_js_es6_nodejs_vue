@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>symbol内置属性</title>
+</head>
+
+<body>
+    <script>
+        // class Person {
+        //     static[Symbol.hasInstance](param) {
+        //         console.log(param); //{}或者是object
+        //         console.log("我被用来检测类型了");
+        //     }
+        // }
+        // let o = {};
+        // console.log(o instanceof Person); //false
+
+        // /*
+        //  对象的Symbol.hasInstance属性，指向一个内部方法.
+        //   当其他对象使用instanceof运算符，判断是否为该对象的实例时，会调用这个方法
+        //   比如，foo instanceof Foo在语言内部，
+        //   实际调用的是Foo[Symbol.hasInstance](foo)。
+        // */
+        // class MyClass {
+        //      [Symbol.hasInstance](foo) {
+        //         return foo instanceof Array;
+        //     }
+        // }
+        // console.log([1, 2, 3] instanceof new MyClass()); // true
+        // /*
+        //   MyClass是一个类，new MyClass()会返回一个实例。
+        //   该实例的Symbol.hasInstance方法，会在进行instanceof运算时自动调用，
+        //   判断左侧的运算子是否为Array的实例。
+        // */
+
+
+        /*
+          对象的Symbol.isConcatSpreadable属性等于一个布尔值，
+          表示该对象用于Array.prototype.concat()时，是否可以展开。
+        */
+        const arr1 = [1, 2, 3];
+        console.log(arr1.concat('e')); //(4) [1, 2, 3, 'e']
+        console.log(arr1[Symbol.isConcatSpreadable]); //undefined
+        /*
+          上面代码说明，数组的默认行为是可以展开，Symbol.isConcatSpreadable
+          默认等于undefined。该属性等于true时，也有展开的效果。
+        */
+        const arr2 = [4, 5, 6];
+        arr2[Symbol.isConcatSpreadable] = false; //该属性设置为false，不展开
+        console.log(arr1.concat(arr2)); //(4) [1, 2, 3, Array(3)]
+
+        /*
+          对象正好相反，默认不展开。它的Symbol.isConcatSpreadable属性
+          设为true，才可以展开。
+        */
+        let obj = {
+            length: 2,
+            0: 'c',
+            1: 'd'
+        };
+        console.log(['a', 'b'].concat(obj, 'e')); // ['a', 'b', obj, 'e']
+        obj[Symbol.isConcatSpreadable] = true;
+        console.log(['a', 'b'].concat(obj, 'e')); // ['a', 'b', 'c', 'd', 'e']
+    </script>
+</body>
+
+</html>

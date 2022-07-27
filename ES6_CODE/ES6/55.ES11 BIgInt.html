@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BigInt</title>
+</head>
+
+<body>
+    <script>
+        //大整型BigInt 只用来表示整数，没有位数的限制，任何位数的整数都可以精确表示。
+        //作用：一是精确度，二是表示大的数字。
+        //为了与 Number 类型区别，BigInt 类型的数据必须添加后缀n。
+        // let n = 521n;
+        // console.log(n, typeof n);//521n 'bigint'
+
+        0b1101n // 二进制
+        0o777n // 八进制
+        0xFFn // 十六进制
+
+        //函数 将普通的整数转化为大整数
+        let n = 123;
+        console.log(BigInt(n));
+
+        //大数值运算 BigInt 不能直接和 整数 运算
+        let max = Number.MAX_SAFE_INTEGER;
+        console.log(BigInt(max)+BigInt(1));
+    </script>
+</body>
+
+</html>

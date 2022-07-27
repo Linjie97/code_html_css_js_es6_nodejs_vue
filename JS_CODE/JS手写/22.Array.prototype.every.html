@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Array.prototype.every</title>
+</head>
+
+<body>
+    <!-- 
+        array.every(function(currentValue, index, arr), thisValue)
+        布尔值。如果数组中的所有元素都通过测试，则返回 true，否则返回 false.
+        如果找到函数返回 false 值的数组元素，every() 返回 false（并且不检查剩余值）
+        跟some很类似，some是找到一个true即返回，every是找到一个false即返回。
+     -->
+    <script>
+        Array.prototype.every2 = function (callback, thisArg) {
+            if (this == null) {
+                throw new TypeError('this is null or not defined')
+            }
+            if (typeof callback !== "function") {
+                throw new TypeError(callback + ' is not a function')
+            }
+            let res = []
+            for (let i = 0; i < this.length; i++) {
+                if (!callback.call(thisArg, this[i], i, this)) return false
+            }
+            return true
+        }
+        // 测试
+        arr = [1, 2, 3, 54, 7]
+        result = arr.every2((item, index, arr) => {
+            return item > 4
+        })
+        console.log(arr, result);
+    </script>
+
+    <script>
+        Array.prototype.myEvery = function (callback) {
+            for (let i = 0; i < this.length; i++) {
+                if (!callback(this[i], i, this)) return false  // 如果有一个不通过都返回false
+            }
+            return true
+        }
+        // 测试
+        arr = [1, 2, 3, 54, 7]
+        result = arr.myEvery((item, index, arr) => {
+            return item > 4
+        })
+        console.log(arr, result);
+    </script>
+</body>
+
+</html>

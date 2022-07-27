@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>一个重要的内置关系</title>
+    <!-- 引入Vue -->
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+    <!-- 
+        1.一个重要的内置关系：VueComponent.prototype.__proto__ === Vue.prototype
+            VueComponent的原型对象的隐式原型=Vue的显式原型
+        2.为什么要有这个关系：让组件实例对象（vc）可以访问到Vue原型上的属性、方法
+     -->
+    <!-- 准备好容器 -->
+    <div id="root">
+       
+    </div>
+
+    <script>
+        Vue.config.productionTip = false;//设置为 false 以阻止 vue 在启动时生成生产提示。
+
+         //定义school组件
+         const school = Vue.extend({
+            name: 'school',
+            template: `
+            <div>
+              <h2>学校名称:{{name}}</h2>
+              <h2>学校地址:{{address}}</h2>
+            </div>
+           `,
+            data() {
+                return {
+                    name: 'SZU',
+                    address: '深圳',
+                }
+            },
+        });
+
+        //创建一个vm
+        new Vue({
+            el:'#root',
+            data:{
+                msg:'你好'
+            }
+        });
+        // console.log(school.prototype.__proto__ === Vue.prototype);//true
+    </script>
+</body>
+</html>

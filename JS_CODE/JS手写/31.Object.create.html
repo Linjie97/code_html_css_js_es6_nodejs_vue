@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Object.create</title>
+</head>
+
+<body>
+    <!-- 
+        object.create方法有两个参数:
+          proto必须的,是新建对象的原型对象;
+          propertiesObject可选的，如果没有指定为 undefined，则是要添加到新创建对象的
+                 不可枚举（默认）属性（即其自身定义的属性，而不是其原型链上的枚举属性）对象的
+                 属性描述符以及相应的属性名称。这些属性对应Object.defineProperties()的第二个参数。
+                 新创建的实例对象上的属性。
+        返回值：一个新对象，带着指定的原型对象和属性。
+     -->
+    <script>
+        Object.create2 = function (proto, propertyObject = undefined) {
+            if (typeof proto !== 'object' && typeof proto !== 'function') {
+                throw new TypeError('Object prototype may only be an Object or null.')
+                if (propertyObject == null) {
+                    new TypeError('Cannot convert undefined or null to object')
+                }
+                function F() { }
+                F.prototype = proto
+                const obj = new F()
+                if (propertyObject != undefined) {
+                    Object.defineProperties(obj, propertyObject)
+                }
+                if (proto === null) {
+                    // 创建一个没有原型对象的对象，Object.create(null)
+                    obj.__proto__ = null
+                }
+                return obj
+            }
+        }
+
+    </script>
+</body>
+
+</html>

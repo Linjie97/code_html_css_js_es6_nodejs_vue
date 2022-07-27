@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* 步骤：
+           1.一个div以及四个border，border宽度为div的一半
+           2.div宽高设置为0
+           3.去掉border-top
+           4.将左右两边的border透明
+           记住div不要设置背景颜色
+           就是设置三个方向的border即可
+        */
+        .triangle {
+            border-left: 50px solid transparent;
+            border-right: 50px solid transparent;
+            /* border-top: 50px solid #666; */
+            border-bottom: 50px solid #999;
+            /* width: 100px;
+            height: 100px; */
+            /* 去掉宽高 */
+            width: 0px;
+            height: 0px;
+            margin-bottom: 50px;
+        }
+    </style>
+
+    <style>
+        /* 有边缘色的三角形 */
+        .chat-msg {
+            width: 300px;
+            height: 80px;
+            border: 1px solid #ccc;
+            position: relative;
+             /* 添加阴影 */
+            filter: drop-shadow(0 0 2px #999);
+            background-color: #fff;
+        }
+
+        .chat-msg::before {
+            content: "";
+            position: absolute;
+            left: -10px;
+            top: 34px;
+            border-top: 6px solid transparent;
+            border-bottom: 6px solid transparent;
+            border-right: 10px solid #ccc;
+        }
+
+        /* 用一个背景颜色为白色的三角形错位2px盖住即可得到边缘色的三角形 */
+        .chat-msg::after {
+            content: "";
+            position: absolute;
+            left: -8px;
+            top: 34px;
+            border-top: 6px solid transparent;
+            border-bottom: 6px solid transparent;
+            border-right: 10px solid #fff;
+        }
+
+        /* 上面用的属性都是css2最基本的属性，所以没有兼容性问题。 */
+
+       
+    </style>
+</head>
+
+
+</head>
+
+<body>
+    <div class="triangle"></div>
+    <div class="chat-msg">hi,亲！</div>
+</body>
+
+</html>

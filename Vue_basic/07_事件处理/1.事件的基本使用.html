@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>事件的基本使用</title>
+    <!-- 引入Vue -->
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+
+<body>
+    <!-- 
+        事件的基本使用：
+           1.使用v-on：xxx 或 @xxx 绑定事件，其中xxx是事件名；
+           2.事件的回调需要配置在methods对象中，最终会在vm上(不是数据代理，没有setter和getter)；
+           3.methods中配置的函数，不要用箭头函数！否则this就不是vm了；
+           4.methods中配置的函数，都是被Vue所管理的函数，this的指向是vm 或 组件实例对象；
+           5.@click="demo" 和 @click="demo($event)"效果一致，但后者可以传参
+     -->
+    <!-- 准备好容器 -->
+    <div id="root">
+        <h2>欢迎来到{{name}}学习</h2>
+        <!-- <button v-on:click="showInfo">点一下有提示信息</button> -->
+        <!-- 简写模式 -->
+        <button @click="showInfo1">点一下有提示信息1(不传参)</button>
+        <button @click="showInfo2(66,$event)">点一下有提示信息2(传参)</button>
+        <!-- @click="showInfo2(66,$event) 传入参数66,以及给event占个位置，颠倒顺序也可 -->
+    </div>
+
+    <script>
+        Vue.config.productionTip = false;//设置为 false 以阻止 vue 在启动时生成生产提示。
+
+        new Vue({
+            el: '#root',
+            data: {
+                name: 'SZU',
+            },
+            //methods中的函数也可以往data中写，也可以生效，但是vue的负担太大，还得做数据代理
+            //且函数做数据代理也只能是调用不能修改，没有意义。
+            //事件绑定
+            methods: { //使用配置项将事件的回调配置进去vue实例 
+                showInfo1(event) {//event事件对象，原生也有,这里是PointerEvent
+                    // console.log(event.target);//<button>点一下有提示信息</button>
+                    // console.log(event.target.innerText);//点一下有提示信息
+                    // console.log(this);//Vue实例对象即vm,如果showInfo用箭头函数this就是window
+                    alert('hello');
+                },
+                showInfo2(number,event) {//event事件对象，原生也有
+                    console.log(number,event);//66  PointerEvent
+                    alert('hello~~');
+                },
+            },
+        });
+    </script>
+</body>
+
+</html>

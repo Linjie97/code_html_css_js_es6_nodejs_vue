@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        /*
+           一元运算符，只需要一个操作数
+           +  正号，正号不会对数字产生任何影响
+           -  负号，负号对数字取反
+           对于非number类型，先转换为number类型再进行运算，可以对其他数据类型
+             使用+，来将其转换为number，原理和number()函数一样
+
+        */
+
+        var a = 123;
+        a = +a; //123
+        a = -a;//-123
+
+        a = true;
+        a = -a; //-1
+
+        a = "18"; //String类型的18
+        a = +a; //Number类型的18
+        console.log("a="+a);
+
+        var result = 1 + "2" + 3; //String类型的123
+        var result = 1 + +"2" + 3; //number类型的6
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>symbol</title>
+</head>
+<body>
+    <script>
+        //创建Symbol
+        let s = Symbol();
+        // console.log(s,typeof s);//Symbol() 'symbol'
+        /*
+          调用symbol()函数时可以传入一个字符串参数作为对符号的描述，
+          将来可以通过这个字符串来调试代码，但是这个字符串参数与符号定义
+          或标识完全无关
+        */
+        let s2 = Symbol('尚硅谷');
+        let s3 = Symbol('尚硅谷');
+
+        console.log(s2 === s3);//false
+
+        //Symbol.for创建
+        /*
+          在运行时的不同部分需要共享和重用符号实例，那么可以用一个字符串
+          作为键，在全局符号注册表中创建并重用符号
+          为此使用Symbol.for(),访问一个全局的symbol表，后续使用相同字符串的调用
+          同样会检查注册表，发现存在与该字符串对应的符号就会返回该符号实例，
+          不存在对应的符号就会生成一个新符号实例
+        */
+        let s4 = Symbol.for('尚硅谷');
+        console.log(s4,typeof s4);//Symbol(尚硅谷) 'symbol'
+        let s5 = Symbol.for('尚硅谷');
+        console.log(s4 === s5);//true
+
+        //不能与其他数据进行运算，symbol和symbol类型也不能进行加减等运算
+
+        //USONB  JS的数据类型
+        //U  undefined
+        //S  string  symbol
+        //O  object
+        //N  null  number
+        //B  boolean
+    </script>
+</body>
+</html>

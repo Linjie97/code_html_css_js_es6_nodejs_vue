@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>globalThis</title>
+</head>
+<body>
+    <script>
+        //无论执行环境是浏览器，nodejs还是其他，globalThis始终指向全局对象
+        console.log(globalThis);//Window
+        //需要对全局对象执行操作，可以忽略环境
+    </script>
+</body>
+</html>

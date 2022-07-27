@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .item {
+            width: 100px;
+            height: 50px;
+            border: solid 1px rgb(42, 156, 156);
+            float: left;
+            margin-right: 10px;
+        }
+    </style>
+    <script>
+        //如果没加window.onload需要将script放在body中div之后才能生效
+        window.onload = function () {
+            //获取div中元素对象
+            let items = document.getElementsByClassName('item');
+            //遍历并绑定事件
+            for (let i = 0; i < items.length; i++) {
+                items[i].onclick = function () {
+                    //修改当前元素的背景颜色
+                    // this.style.background = 'pink'; //可以
+
+                    items[i].style.background = 'pink';
+                    /*
+                      i使用var声明，属于全局作用域，循环结束，i=3
+                      然后再执行回调函数，此时items[3]不存在，报错
+                      这里onclick是异步任务，for循环执行完了才执行函数
+
+                      将var改成let即可使用
+                      可理解为用let定义了三个i的值，分别有三个块级作用域，
+                      作用域间互不影响，分别都调用了回调函数onclick
+                    */
+                }
+            }
+        }
+    </script>
+
+</head>
+
+<body>
+    <div class="container">
+        <h2 class="page-header">点击切换颜色</h2>
+        <div class="item"></div>
+        <div class="item"></div>
+        <div class="item"></div>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>类继承</title>
+</head>
+<body>
+    <script>
+        //es5对象继承和es6类继承的结果是一样的
+        class Phone{
+            //构造方法
+            constructor(brand,price) {
+                this.brand = brand;
+                this.price = price;
+            }
+            //父类的成员属性
+            call(){
+                console.log("我可以打电话");
+            }
+        }
+
+        class SmartPhone extends Phone{
+            //构造方法
+            constructor(brand,price,color,size){
+                super(brand,price);//等同于Phone.call(this,brand,price);
+                this.color = color;
+                this.size = size;
+            }
+            photo(){
+                console.log("我可以拍照");
+            }
+            playGame(){
+                console.log("我可以玩游戏");
+            }
+            //子类对父类方法的重写，有个很形象的说法，不算重写只是原型链上被半路劫持
+            //子类无法直接调用父类的同名方法
+            call(){
+                console.log("我可以进行视频通话");
+            }
+        }
+
+        const xiaomi = new SmartPhone('小米',799,'黑色','4.7inch');
+        console.log(xiaomi);
+    </script>
+</body>
+</html>

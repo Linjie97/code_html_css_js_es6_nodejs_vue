@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            perspective: 800px;
+        }
+
+        .box1{
+            width: 200px;
+            height: 200px;
+            background-color: #bfa;
+            margin: 200px auto;
+            transition: 2s;
+        }
+
+        body:hover .box1{
+
+            /* 
+              旋转：通过旋转可以使元素沿着x y或z旋转指定的角度（老师说跟平移的坐标一样，但我测了并不同）
+                  rotateX() x轴向上
+                  rotateY() y轴向右
+                  rotateZ() z轴朝外
+                     数值：具体角度xxdeg或者几圈xxturn
+            */
+            /* transform: rotateZ(45deg); */
+            /* transform: rotateZ(1.5turn); */
+
+            /* transform: rotateY(180deg) translateZ(400px); */
+            /* 反转180度到背面后，坐标轴也会跟着改变，正负方向变化，
+                先旋转再平移，因此反而是视觉变小 
+            */
+
+            /* transform: translateZ(400px) rotateY(180deg); */
+            /* 先z轴平移再旋转，会有视距上的变近效果 */
+
+            transform: rotateY(180deg);
+            /* 可以做镜像效果，记得网页要加perspective */
+            backface-visibility: hidden;
+            /* 设置背面是否显示 */
+        }
+    </style>
+</head>
+<body>
+    <div class="box1"></div>
+</body>
+</html>

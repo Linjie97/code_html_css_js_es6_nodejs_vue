@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        /*
+          promiseConcurrencyLimit(limit, array, iteratorFn)
+          limit 是同一时间执行的 promise 数量，array 是参数数组，iteratorFn 每个 promise 中执行的异步操作。
+          开发中需要在多个promise处理完成后执行后置逻辑，通常使用Promise.all
+          但是有个问题是，因为 promise 创建后会立即执行，也就是说传入到 promise.all 中的多个 promise 实例，
+          在其创建的时候就已经开始执行了，如果这些实例中执行的异步操作都是 http 请求，
+          那么就会在瞬间发出 n 个 http 请求，这样显然是不合理的；
+          更合理的方式是：对 Promise.all 中异步操作的执行数量加以限制，同一时间只允许有 limit 个异步操作同时执行。
+        */
+        async function asyncPool(poolLimit, array, iteratorFn) {
+            const ret = []; // 用于存放所有的promise实例
+            const executing = []; // 用于存放目前正在执行的promise
+            for (const item of array) {
+                const p = Promise.resolve(iteratorFn(item)); // 防止回调函数返回的不是promise，使用Promise.resolve进行包裹
+                ret.push(p);
+                if (poolLimit <= array.length) {
+                    // then回调中，当这个promise状态变为fulfilled后，将其从正在执行的promise列表executing中删除
+                    const e = p.then(() => executing.splice(executing.indexOf(e), 1));
+                    executing.push(e);
+                    if (executing.length >= poolLimit) {
+                        // 一旦正在执行的promise列表数量等于限制数，就使用Promise.race等待某一个promise状态发生变更，
+                        // 状态变更后，就会执行上面then的回调，将该promise从executing中删除，
+                        // 然后再进入到下一次for循环，生成新的promise进行补充
+                        await Promise.race(executing);
+                    }
+                }
+            }
+            return Promise.all(ret);
+        }
+
+        const timeout = (i) => {
+            console.log('开始', i);
+            return new Promise((resolve) => setTimeout(() => {
+                resolve(i);
+                console.log('结束', i);
+            }, i));
+        };
+
+        (async () => {
+            const res = await asyncPool(2, [1000, 5000, 3000, 2000], timeout);
+            console.log(res);
+        })();
+    </script>
+    <script>
+        /*
+        题目是这样的：有 8 个图片资源的 url，已经存储在数组 urls 中（即urls = [‘http://example.com/1.jpg’, …., 
+        ‘http://example.com/8.jpg’]），而且已经有一个函数 function loadImg，输入一个 url 链接，
+        返回一个 Promise，该 Promise 在图片下载完成的时候 resolve，下载失败则 reject。
+        但是我们要求，任意时刻，同时下载的链接数量不可以超过 3 个。
+        https://blog.csdn.net/tonghonglei/article/details/88054116?spm=1001.2101.3001.6661.1&utm_medium=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-1-88054116-blog-119280634.pc_relevant_multi_platform_featuressortv2removedup&depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-1-88054116-blog-119280634.pc_relevant_multi_platform_featuressortv2removedup&utm_relevant_index=1
+        用 Promise.race来实现，先并发请求3个图片资源，这样可以得到 3 个 Promise实例，组成一个数组promises ，
+        然后不断的调用 Promise.race 来返回最快改变状态的 Promise，然后从数组（promises ）中删掉这个 Promise
+         对象实例，再加入一个新的 Promise实例，直到全部的 url 被取完。
+        */ 
+        //省略代码
+        /*
+          urls：多个图片资源地url组成的数组，limit限制并发数，handler处理函数
+        */ 
+        function limitLoad(urls, handler, limit) {
+            // 对数组做一个拷贝
+            const sequence = [].concat(urls)
+            let promises = [];
+
+            //并发请求到最大数
+            promises = sequence.splice(0, limit).map((url, index) => {
+                // 这里返回的 index 是任务在 promises 的脚标，
+                //用于在 Promise.race 之后找到完成的任务脚标
+                return handler(url).then(() => {
+                    return index
+                });
+            });
+
+            (async function loop() {
+                let p = Promise.race(promises);
+                for (let i = 0; i < sequence.length; i++) {
+                    p = p.then((res) => {
+                        promises[res] = handler(sequence[i]).then(() => {
+                            return res
+                        });
+                        return Promise.race(promises)
+                    })
+                }
+            })()
+        }
+        // limitLoad(urls, loadImg, 3)
+
+    </script>
+</body>
+
+</html>

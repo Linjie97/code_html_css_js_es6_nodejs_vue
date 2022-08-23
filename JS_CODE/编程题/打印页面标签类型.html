@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div>
+        <span></span>
+        <ul>
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+        </ul>
+    </div>
+    <script>
+        // (function (content) {
+        //     var tags = content.getElementsByTagName('*'),
+        //         findTags = [],
+        //         i = 0, tagsLength = tags.length, tagName;
+        //     for (; i < tagsLength; i++) {
+        //         tagName = tags[i].tagName.toLowerCase();
+        //         if (findTags.indexOf(tagName) == -1) {
+        //             findTags.push(tagName);
+        //         }
+        //     }
+        //     console.log(findTags);
+        // })(document)
+
+        // let tags = document.all;//也是获取所有元素
+        let tags = document.getElementsByTagName('*');
+        console.log(tags);//所有标签，有重复,类数组元素,获取的是节点而不只是标签名
+        // 考虑到对应节点有tagName属性
+        let tagName
+        let tagSet = new Set();
+        for(let i=0;i<tags.length;i++){
+            tagName = tags[i].tagName.toLowerCase();
+            if(!tagSet.has(tagName)){
+                tagSet.add(tagName)
+            }
+        }
+        console.log(tagSet);
+    </script>
+</body>
+
+</html>

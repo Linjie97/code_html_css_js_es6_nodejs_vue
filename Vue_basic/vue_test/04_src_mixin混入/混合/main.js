@@ -12,5 +12,7 @@ Vue.mixin(mixin2);
 //创建vm
 new Vue({
     el:'#app',
-    render:h => h(App)
+    render:h => h(App),
+    // 局部混入
+    // mixin:[mixin,mixin2]
 })
